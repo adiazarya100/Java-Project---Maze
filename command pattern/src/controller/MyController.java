@@ -113,7 +113,7 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			
+			System.out.println("test");
 		}
 		
 		
