@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 
 
+// TODO: Auto-generated Javadoc
 /** Maze3d is 3 dimensional array represent maze game.*/
 
 public class Maze3d{
@@ -31,10 +32,8 @@ public class Maze3d{
 	
 	/**
 	 * Instantiates a new maze3d.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param z the z
+	 * Byte array constructor
+	 * @param array the array
 	 */
 	//constructor from byte array to default
 	
@@ -64,6 +63,13 @@ public class Maze3d{
 }
 
 	
+	/**
+	 * Instantiates a new maze3d.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param z the z
+	 */
 	//constructor
 	public Maze3d(int x, int y, int z) {
 		this.x = x;
@@ -273,7 +279,7 @@ public class Maze3d{
 	/**
 	 * Gets the cross section by x.
 	 *
-	 * @param x the x
+	 * @param Line the line
 	 * @return the cross section by x
 	 */
 /*	public int[][] getCrossSectionByX(int x) { // Cross section BY X
@@ -315,7 +321,7 @@ public class Maze3d{
 	/**
 	 * Gets the cross section by y.
 	 *
-	 * @param y the y
+	 * @param floor the floor
 	 * @return the cross section by y
 	 */
 /*	public int[][] getCrossSectionByY(int y) { // Cross section BY Y
@@ -356,7 +362,7 @@ public class Maze3d{
 	/**
 	 * Gets the cross section by z.
 	 *
-	 * @param z the z
+	 * @param Column the column
 	 * @return the cross section by z
 	 */
 /*	public int[][] getCrossSectionByZ(int z) { // Cross section BY Z
@@ -396,7 +402,7 @@ public class Maze3d{
 
 
 	/**
-	 * Prints the maze
+	 * Prints the maze.
 	 */
 //	public void print() {
 //	for (int i = 0; i < x; i++) {
@@ -427,6 +433,12 @@ public class Maze3d{
 		}
 	}
 	
+	/**
+	 * To byte array.
+	 *
+	 * @return the byte[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public byte[] toByteArray() throws IOException{
 		    ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		    DataOutputStream dos = new DataOutputStream(bos);
@@ -464,6 +476,9 @@ public class Maze3d{
 
 
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

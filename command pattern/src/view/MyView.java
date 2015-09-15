@@ -3,6 +3,8 @@ package view;
 import java.io.File;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 
 public class MyView implements View {
 
@@ -64,6 +66,19 @@ public class MyView implements View {
 	public void printMazeSize(long size) {
 		System.out.println("The size of the maze in memory is: "+size);
 		
+	}
+
+	//this command prints the given maze 
+	@Override
+	public void solutionIsReady(String name) {
+		System.out.println("Solution for "+name+" is ready!");
+		
+	}
+
+	//this prints the solution
+	@Override
+	public void printSolution(Solution<Position> solution) {
+		System.out.println(solution);
 	}
 
 

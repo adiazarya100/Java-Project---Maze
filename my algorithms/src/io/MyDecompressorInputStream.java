@@ -28,8 +28,10 @@ public class MyDecompressorInputStream extends InputStream {
 
 		int i = 0;
 
-		int content=0;
-		int counter=0;
+		int content=0; //the integer you want to read
+		int counter=0; //the numbers of times the integer shows
+		
+		//every time you call read() you go 1 step forward
 		while ((i<array.length-1) && ((content = in.read()) != -1) && ((counter = in.read()) != -1)) {
 			
 			for (int k=0; k < counter; k++, i++) {

@@ -3,6 +3,7 @@ package model;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,8 +17,11 @@ import algorithms.demo.searchMaze3DAdapter;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 import algorithms.mazeGenerators.Position;
+import algorithms.search.ASTARalgorithm;
 import algorithms.search.BFSalgorithm;
+import algorithms.search.ManhattanDistance;
 import algorithms.search.Searcher;
+import algorithms.search.Solution;
 
 public class MyModel implements Model {
 
@@ -25,6 +29,8 @@ public class MyModel implements Model {
 															
 	protected HashMap<String, String> compressedHM = new HashMap<>(); // save every compressed maze with his (name, fileName)
 
+	protected HashMap<String, Solution<Position>> solutionHM = new HashMap<>(); //save every solution for specific maze 
+	
 	Controller controller;
 
 	// notify the user the maze is ready after generates new Maze3D
@@ -156,18 +162,49 @@ public class MyModel implements Model {
 		}
 		
 	}
-
+	
+	//solve the maze using BFS or ASTAR algorithm
 	@Override
 	public void mazeSolveing(String name, String algorithm) {
 		Maze3d current = HM.get(name);
 		switch(algorithm){
 		case "BFS":
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
 			Searcher<Position> searcherBFS= new BFSalgorithm<Position>(); 
-			searcherBFS.search(new searchMaze3DAdapter(current));
-			break;
-		case "ASTAR":
+			solutionHM.put(name, searcherBFS.search(new searchMaze3DAdapter(current)));
+				}
+			}).start();
+			controller.solutionIsReady(name);
 			
 			break;
+		case "ASTAR":
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+			Searcher<Position> searcherAStarM= new ASTARalgorithm<Position>(new ManhattanDistance());	
+			solutionHM.put(name, searcherAStarM.search(new searchMaze3DAdapter(current)));
+				}
+			}).start();
+			controller.solutionIsReady(name);
+			
+			break;
+		default:
+			System.out.println("Wrong Input");
+			break;
 		}
+	}
+
+	@Override
+	public void mazeSizeFile(String name) {
+		
+	}
+
+	@Override
+	public void displaySolution(String name) {
+		controller.sendSolutioin(solutionHM.get(name));
 	}
 }

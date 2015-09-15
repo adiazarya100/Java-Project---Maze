@@ -5,6 +5,8 @@ package controller;
 import view.View;
 import model.Model;
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 
 public class MyController implements Controller{
 	
@@ -109,22 +111,48 @@ public class MyController implements Controller{
 		
 	}
 	
+	//this command ask for the maze size in file
 	public class fileSize implements Command {
 
 		@Override
 		public void doCommand(String[] args) {
-			System.out.println("test");
+			model.mazeSizeFile(args[0]);
 		}
 		
 		
 	}
 	
+	//this command solve given maze using the BFS or ASTAR algorithm
 	public class solve implements Command{
 
 		@Override
 		public void doCommand(String[] args) {
 			model.mazeSolveing(args[0],args[1]);
 		}
+		
+	}
+
+	//notify the the solution is ready after solving (view layer)
+	@Override
+	public void solutionIsReady(String name) {
+		view.solutionIsReady(name);
+		
+	}
+	
+	//this command asks for the solution 
+	public class displaySolution implements Command{
+
+		@Override
+		public void doCommand(String[] args) {
+			model.displaySolution(args[0]);
+		}
+		
+	}
+
+	//this method gives us the solution and we send it to the view layer so we can print it
+	@Override
+	public void sendSolutioin(Solution<Position> solution) {
+		view.printSolution(solution);
 		
 	}
 }

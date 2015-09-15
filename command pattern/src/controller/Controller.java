@@ -1,6 +1,8 @@
 package controller;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 
 public interface Controller {
 
@@ -15,6 +17,12 @@ public interface Controller {
 
 	//print maze size in memory
 	public void printMazeSize(long size);
+
+	//notify the the solution is ready after solving
+	public void solutionIsReady(String name);
+
+	//send solution to the controller let us print the solution
+	public void sendSolutioin(Solution<Position> solution);
 	
 
 }

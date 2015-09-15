@@ -1,6 +1,8 @@
 package view;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 
 public interface View {
 
@@ -18,4 +20,10 @@ public interface View {
 
 	//prints the size of the maze in memory
 	void printMazeSize(long size);
+
+	//notify the user that the solution for his maze is ready
+	void solutionIsReady(String name);
+
+	//print the solution
+	void printSolution(Solution<Position> solution);
 }
