@@ -2,6 +2,9 @@ package controller;
 
 
 
+import java.io.PrintWriter;
+import java.util.HashMap;
+
 import view.View;
 import model.Model;
 import algorithms.mazeGenerators.Maze3d;
@@ -12,13 +15,47 @@ public class MyController implements Controller{
 	
 	Model model;
 	View view;
+	HashMap<String, Command> commandsMap = new HashMap<>();
+	private PrintWriter out;
+	
+	//constructor
+	public MyController(Model model, View view, PrintWriter out) 
+	{
+		
+		this.model = model;
+		this.view = view;
+		this.out=out;
+		this.commandsMap.put("dir", new showFilesInPAth());
+		this.commandsMap.put("generate 3d maze", new generate3DMaze());
+		this.commandsMap.put("display", new displayMaze());
+		this.commandsMap.put("display cross section by", new displayCross());
+		this.commandsMap.put("save maze", new saveMaze());
+		this.commandsMap.put("load maze", new loadMaze());
+		this.commandsMap.put("maze size", new mazeSize());
+		//this.commandsMap.put("file size", new fileSize());
+		this.commandsMap.put("solve", new solve());
+		this.commandsMap.put("display solution", new displaySolution());
+		//this.commandsMap.put("exit", new exit());
+		this.setCommandsMap(commandsMap);
+	}
+
+	//get commandsMap
+	public HashMap<String, Command> getCommandsMap() {
+		//view.viewCommandsMap(commandsMap);
+		return commandsMap;
+	}
+
+	//set the commands map in the view layer(!) from the controller
+	public void setCommandsMap(HashMap<String, Command> commandsMap) {
+		view.setHashMap(commandsMap);
+	}
 
 	//this command displays every files in the current path
 	public class showFilesInPAth implements Command {
 
 		@Override
 		public void doCommand(String[] args){
-			view.dir(args[0]); //call the "dir" method
+			view.dir(args[1]); //call the "dir" method
 			}
 	}
 	
@@ -155,4 +192,10 @@ public class MyController implements Controller{
 		view.printSolution(solution);
 		
 	}
+
+/*	@Override
+	public void getCommands() {
+		return 
+		
+	}*/
 }

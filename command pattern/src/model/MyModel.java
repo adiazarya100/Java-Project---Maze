@@ -33,6 +33,19 @@ public class MyModel implements Model {
 	
 	Controller controller;
 
+	
+	
+	//Constructor
+	public MyModel() {
+		super();
+	}
+	
+	//Constructor
+	public MyModel(Controller controller) {
+		
+		this.controller = controller;
+	}
+
 	// notify the user the maze is ready after generates new Maze3D
 	@Override
 	public void provideMaze(String string) {
@@ -203,6 +216,7 @@ public class MyModel implements Model {
 		
 	}
 
+	//asks for the solution and send it to the controller
 	@Override
 	public void displaySolution(String name) {
 		controller.sendSolutioin(solutionHM.get(name));

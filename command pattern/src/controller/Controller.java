@@ -24,5 +24,5 @@ public interface Controller {
 	//send solution to the controller let us print the solution
 	public void sendSolutioin(Solution<Position> solution);
 	
-
+	
 }

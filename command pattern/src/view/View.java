@@ -1,5 +1,8 @@
 package view;
 
+import java.util.HashMap;
+
+import controller.Command;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
@@ -26,4 +29,7 @@ public interface View {
 
 	//print the solution
 	void printSolution(Solution<Position> solution);
+
+	//set the commands map in the view layer
+	void setHashMap(HashMap<String, Command> commandsMap);
 }

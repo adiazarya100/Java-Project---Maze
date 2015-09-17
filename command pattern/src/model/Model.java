@@ -23,8 +23,10 @@ public interface Model {
 	//solve the maze using BFS or ASTAR algorithm
 	void mazeSolveing(String name, String algorithm);
 
+	//asks for the maze size in the file
 	void mazeSizeFile(String name);
 
+	//asks for the solution
 	void displaySolution(String string);
 
 	

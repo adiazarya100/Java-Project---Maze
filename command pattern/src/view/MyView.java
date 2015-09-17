@@ -1,16 +1,32 @@
 package view;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 
+import controller.Command;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 
 public class MyView implements View {
+//CTOR (IN & OUT) לוקח אותם ויוצר CLI
+	
+	
+	protected CLI cli;
+	private PrintWriter out;
+	private HashMap<String, Command> hm;
+	
+	//constructor
+	public MyView(CLI cli) {
+	this.cli = cli;
+}
 
 	//this command displays every files in the current path
 	@Override
 	public void dir(String string) {
+		
 		File folder = new File(string);
 		File[] listOfFiles = folder.listFiles();
 
@@ -23,6 +39,7 @@ public class MyView implements View {
 		}
 	}
 	
+	//this command prints the given maze 
 	@Override
 	public void displayMaze(Maze3d current) {
 
@@ -81,5 +98,15 @@ public class MyView implements View {
 		System.out.println(solution);
 	}
 
+	
+	//set the commands map in the view layer
+	public void setHashMap(HashMap<String, Command> hashmap){
+		this.hm=hashmap;
+	}
+
+	public void start() throws IOException{
+		cli.setHashMap(hm);
+		cli.start();
+	}
 
 }
