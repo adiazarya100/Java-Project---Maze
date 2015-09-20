@@ -10,9 +10,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import controller.Controller;
+import controller.MyController;
 import algorithms.demo.searchMaze3DAdapter;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
@@ -37,7 +40,6 @@ public class MyModel implements Model {
 	
 	//Constructor
 	public MyModel() {
-		super();
 	}
 	
 	//Constructor
@@ -48,9 +50,13 @@ public class MyModel implements Model {
 
 	// notify the user the maze is ready after generates new Maze3D
 	@Override
-	public void provideMaze(String string) {
-		Maze3d current = HM.get(string);
-		controller.displayMaze(current);
+	public void provideMaze(String name) {
+		if(HM.containsKey(name)){
+			Maze3d current = HM.get(name);
+			controller.displayMaze(current);
+		}
+		else
+			System.out.println("Maze not found, please enter another name.");
 
 	}
 
@@ -59,16 +65,23 @@ public class MyModel implements Model {
 	@Override
 	public void generateMaze(String name, int x, int y, int z) {
 
+		if(!HM.containsKey(name)){
 		new Thread(new Runnable() {
-
+			
 			@Override
 			public void run() {
 				Maze3d maze = new MyMaze3dGenerator().generate(x, y, z);
 				HM.put(name, maze);
+			
 			}
+			
 		}).start();
 		// notify the user the maze is ready
-		controller.mazeIsReady(name); // notify the controller layer
+		// notify the controller layer
+		controller.mazeIsReady(name);
+		}
+		else
+			System.out.println("Wrong Input, name is used, please enter another name.");
 	}
 
 	// this command asks for printing maze3d cross section for the given axis,
@@ -137,7 +150,7 @@ public class MyModel implements Model {
 
 	// load compressed maze
 	@Override
-	public void loadCompressedMaze(String fileName, String name) {
+	public void loadCompressedMaze(String fileName, String name){
 
 		InputStream in = null;
 		try {
@@ -146,7 +159,21 @@ public class MyModel implements Model {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		byte array[] = new byte[compressedHM.get(fileName).length()];
+		byte array[]=null;
+		try {
+			array = new byte[HM.get(name).toByteArray().length];
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		//byte array[] = new byte[36];
+		try {
+			in.read(array);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		try {
 			in.read(array);
 		} catch (IOException e) {
@@ -160,6 +187,7 @@ public class MyModel implements Model {
 			e.printStackTrace();
 		}
 		Maze3d loaded = new Maze3d(array);
+		loaded.print();
 		HM.put(name, loaded);
 	}
 
@@ -187,7 +215,9 @@ public class MyModel implements Model {
 				@Override
 				public void run() {
 			Searcher<Position> searcherBFS= new BFSalgorithm<Position>(); 
-			solutionHM.put(name, searcherBFS.search(new searchMaze3DAdapter(current)));
+			Solution<Position> s = new Solution<Position>();
+			s= searcherBFS.search(new searchMaze3DAdapter(current));
+			solutionHM.put(name, s);
 				}
 			}).start();
 			controller.solutionIsReady(name);
@@ -213,12 +243,31 @@ public class MyModel implements Model {
 
 	@Override
 	public void mazeSizeFile(String name) {
-		
+		try{
+		File F = new File(compressedHM.get(name));
+		String result="";
+		result+=F.length();
+		/*if(F.exists()){*/
+		controller.printFileSize(result);
+		}
+		/*System.out.println(F.length());*/
+		catch(NullPointerException e){
+			e.printStackTrace();
+		}
+/*		else
+			 System.out.println("File does not exists!");
+		controller.printFileSize(F.length());*/
 	}
 
 	//asks for the solution and send it to the controller
 	@Override
 	public void displaySolution(String name) {
 		controller.sendSolutioin(solutionHM.get(name));
+	}
+
+	//set controller
+	@Override
+	public void setController(MyController myController) {
+		this.controller = myController;
 	}
 }

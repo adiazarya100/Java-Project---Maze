@@ -2,6 +2,7 @@ package controller;
 
 
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -16,25 +17,25 @@ public class MyController implements Controller{
 	Model model;
 	View view;
 	HashMap<String, Command> commandsMap = new HashMap<>();
-	private PrintWriter out;
+	//private PrintWriter out;
 	
 	//constructor
-	public MyController(Model model, View view, PrintWriter out) 
+	public MyController(Model model, View view) 
 	{
 		
 		this.model = model;
 		this.view = view;
-		this.out=out;
+		//this.out=out;
 		this.commandsMap.put("dir", new showFilesInPAth());
-		this.commandsMap.put("generate 3d maze", new generate3DMaze());
+		this.commandsMap.put("generate", new generate3DMaze());
 		this.commandsMap.put("display", new displayMaze());
-		this.commandsMap.put("display cross section by", new displayCross());
-		this.commandsMap.put("save maze", new saveMaze());
-		this.commandsMap.put("load maze", new loadMaze());
-		this.commandsMap.put("maze size", new mazeSize());
-		//this.commandsMap.put("file size", new fileSize());
+		this.commandsMap.put("cross", new displayCross());
+		this.commandsMap.put("save", new saveMaze());
+		this.commandsMap.put("load", new loadMaze());
+		this.commandsMap.put("maze", new mazeSize());
+		this.commandsMap.put("file", new fileSize());
 		this.commandsMap.put("solve", new solve());
-		this.commandsMap.put("display solution", new displaySolution());
+		this.commandsMap.put("solution", new displaySolution());
 		//this.commandsMap.put("exit", new exit());
 		this.setCommandsMap(commandsMap);
 	}
@@ -65,7 +66,10 @@ public class MyController implements Controller{
 		@Override
 		public void doCommand(String[] args) {
 			//call the generate method
-			model.generateMaze(args[0] , Integer.parseInt(args[1]),Integer.parseInt(args[2]),Integer.parseInt(args[3])); 
+			if(args.length==7 && (isNumeric(args[4])==true) && (isNumeric(args[5])==true) && (isNumeric(args[6])==true))
+			model.generateMaze(args[3] , Integer.parseInt(args[4]),Integer.parseInt(args[5]),Integer.parseInt(args[6])); 
+			else
+				System.out.println("Wrong input, please enter command + <name> + 3 argument stand for maze dimensions");
 
 		}
 
@@ -76,15 +80,15 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.provideMaze(args[0]); //asks for specific maze by his name
+			model.provideMaze(args[1]); //asks for specific maze by his name
 		}
 
 	}
 
 	//notify the user the maze is ready after generates new Maze3D (view layer)
 	@Override
-	public void mazeIsReady(String string) {
-		view.mazeIsReady(string);
+	public void mazeIsReady(String name) {
+		view.mazeIsReady(name);
 		
 	}
 
@@ -100,7 +104,10 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.crossSection(args[0], Integer.parseInt(args[1]), args[2]);
+			if(isNumeric(args[5]))
+			model.crossSection(args[4], Integer.parseInt(args[5]), args[7]);
+			else
+				System.out.println("Wrong input. please enter command +  axis + index + name");
 		}
 	}
 
@@ -116,7 +123,7 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.saveCompressedMaze(args[0], args[1]);
+			model.saveCompressedMaze(args[2], args[3]);
 			
 		}
 	}
@@ -126,7 +133,7 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.loadCompressedMaze(args[0],args[1]);
+			model.loadCompressedMaze(args[1],args[2]);
 			
 		}
 	}
@@ -136,12 +143,12 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.mazeSize(args[0]); //ask the size from model layer
+			model.mazeSize(args[2]); //ask the size from model layer
 		}
 		
 	}
 	
-	//print the size of the maze (view layer)
+	//print the size of the maze in memory (view layer)
 	@Override
 	public void printMazeSize(long size) {
 		view.printMazeSize(size);
@@ -153,7 +160,7 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.mazeSizeFile(args[0]);
+			model.mazeSizeFile(args[2]);
 		}
 		
 		
@@ -164,7 +171,7 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.mazeSolveing(args[0],args[1]);
+			model.mazeSolveing(args[1],args[2]);
 		}
 		
 	}
@@ -181,7 +188,7 @@ public class MyController implements Controller{
 
 		@Override
 		public void doCommand(String[] args) {
-			model.displaySolution(args[0]);
+			model.displaySolution(args[2]);
 		}
 		
 	}
@@ -193,9 +200,35 @@ public class MyController implements Controller{
 		
 	}
 
-/*	@Override
-	public void getCommands() {
-		return 
+	//set all the design pattern, must start the controller in all layers
+	@Override
+	public void start() throws IOException {
+		this.view.setController(this);
+		this.model.setController(this);
+		this.view.start();
 		
-	}*/
+	}
+
+	//this method is for the generate method
+	//this is validation that the user send integer arguments 
+	public boolean isNumeric(String str)  
+	{  
+	  try  
+	  {  
+	    double d = Double.parseDouble(str);  
+	  }  
+	  catch(NumberFormatException nfe)  
+	  {  
+	    return false;  
+	  }  
+	  return true;  
+	}
+
+	//print maze size in file
+	@Override
+	public void printFileSize(String size) {
+		view.printMazeInFileSize(size);
+	}
+	
+	
 }

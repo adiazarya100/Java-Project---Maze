@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 import controller.Command;
+import controller.Controller;
+import controller.MyController;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
@@ -13,14 +15,14 @@ import algorithms.search.Solution;
 public class MyView implements View {
 //CTOR (IN & OUT) לוקח אותם ויוצר CLI
 	
-	
+	private Controller controller;
 	protected CLI cli;
 	private PrintWriter out;
 	private HashMap<String, Command> hm;
 	
 	//constructor
 	public MyView(CLI cli) {
-	this.cli = cli;
+		this.cli = cli;
 }
 
 	//this command displays every files in the current path
@@ -29,7 +31,8 @@ public class MyView implements View {
 		
 		File folder = new File(string);
 		File[] listOfFiles = folder.listFiles();
-
+		if(folder.exists())
+		{
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {
 				System.out.println("File " + listOfFiles[i].getName());
@@ -37,6 +40,9 @@ public class MyView implements View {
 				System.out.println("Directory " + listOfFiles[i].getName());
 			}
 		}
+		}
+		else
+			System.out.println("path not exists, try again.");
 	}
 	
 	//this command prints the given maze 
@@ -54,6 +60,7 @@ public class MyView implements View {
 				}
 			}
 		}
+		System.out.println();
 
 	}
 
@@ -84,7 +91,13 @@ public class MyView implements View {
 		System.out.println("The size of the maze in memory is: "+size);
 		
 	}
-
+	
+	//prints the size of the maze in memory or File
+	@Override
+	public void printMazeInFileSize(String size) {
+		System.out.println("The size of the maze in the file is: "+size);
+	}
+	
 	//this command prints the given maze 
 	@Override
 	public void solutionIsReady(String name) {
@@ -107,6 +120,11 @@ public class MyView implements View {
 	public void start() throws IOException{
 		cli.setHashMap(hm);
 		cli.start();
+	}
+
+	@Override
+	public void setController(MyController myController) {
+		this.controller=myController;
 	}
 
 }

@@ -1,5 +1,9 @@
 package model;
 
+import java.io.IOException;
+
+import controller.MyController;
+
 public interface Model {
 
 	//provide the requested maze for display
@@ -28,6 +32,9 @@ public interface Model {
 
 	//asks for the solution
 	void displaySolution(String string);
+
+	//set the controller
+	void setController(MyController myController);
 
 	
 }

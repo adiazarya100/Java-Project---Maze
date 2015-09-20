@@ -1,8 +1,10 @@
 package view;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import controller.Command;
+import controller.MyController;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
@@ -23,6 +25,9 @@ public interface View {
 
 	//prints the size of the maze in memory
 	void printMazeSize(long size);
+	
+	//prints the size of the maze in file
+	void printMazeInFileSize(String size);
 
 	//notify the user that the solution for his maze is ready
 	void solutionIsReady(String name);
@@ -32,4 +37,8 @@ public interface View {
 
 	//set the commands map in the view layer
 	void setHashMap(HashMap<String, Command> commandsMap);
+	
+	void start() throws IOException;
+
+	void setController(MyController myController);
 }

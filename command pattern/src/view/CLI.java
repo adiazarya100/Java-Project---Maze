@@ -20,9 +20,8 @@ import controller.Command;
 import controller.MyController;
 
 public class CLI implements Runnable{
-/*שווv CLI חדש עם אינפוט ואאוטפוט */
-	
-	
+
+		
 	protected HashMap<String, Command> commandsMap = new HashMap<>();
 	private PrintWriter out;
 	private BufferedReader in;
@@ -87,8 +86,13 @@ public class CLI implements Runnable{
 	/** Start the CLI. "exit" will end it.
 	 * 
 	 */
-	public void start()
-	{
+	public void start(){
+		this.run();
+	}
+	
+	@Override
+	public void run(){
+		
 		//commandsMap=mc.getCommandsMap();
 		out.print("Enter command: ");
 		out.flush();
@@ -100,6 +104,15 @@ public class CLI implements Runnable{
 				String[] sp = line.split(" ");
 								
 				String commandName = sp[0];
+				if(commandName.equals("display"))
+				{
+					if(sp[1].equals("cross"))
+						commandName="cross";
+					else if(sp[1].equals("solution"))
+						commandName="solution";
+						
+				}
+				
 				//String[] arg = null;
 				/*if (sp.length > 1)
 					arg[0] = sp[1];*/
@@ -116,7 +129,7 @@ public class CLI implements Runnable{
 					
 				out.flush();
 				
-				out.print("Enter command: ");
+				out.println("Enter command: ");
 				out.flush();
 				line = in.readLine();
 			}
@@ -143,25 +156,18 @@ public class CLI implements Runnable{
 	}
 	
 
-	public static void main(String[] args) throws IOException {
-		
-		PrintWriter w=new PrintWriter(System.out);
-		CLI cli = new CLI(w,new BufferedReader(new InputStreamReader(System.in)));/*, new MyController(w)*/
-		MyView view = new MyView(cli);
-		MyModel model = new MyModel();
-		MyController controller = new MyController(model, view, w);
-		
-		view.start();
-	}
+//	public static void main(String[] args) throws IOException {
+//		
+//		PrintWriter w=new PrintWriter(System.out);
+//		CLI cli = new CLI(w,new BufferedReader(new InputStreamReader(System.in)));/*, new MyController(w)*/
+//		MyView view = new MyView(cli);
+//		MyModel model = new MyModel();
+//		MyController controller = new MyController(model, view, w);
+//		view.start();
+//	}
 	
 	public void setHashMap(HashMap<String, Command> hm) {
 		this.commandsMap=hm;
-		
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 
