@@ -1,28 +1,35 @@
 package model;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Observer;
 
+import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Searchable;
 import algorithms.search.Solution;
 
-public interface Model extends Observer{
+public interface Model{
 	
 	
+	
+	
+	public HashMap<String, Maze3d> getHM();
 	/**
 	 * Maze size.
 	 * get model size in the memory
 	 * @param name the name
+	 * @throws IOException 
 	 */
-	public void getModelSizeInMemory(String name);
+	public long getModelSizeInMemory(String name) throws IOException;
 	
 	
 	/**
 	 * Maze size file.
 	 * asks for the model size in the file
 	 * @param name the name
+	 * @return 
 	 */
-	public void getModelSizeInFile(String name);
+	public long getModelSizeInFile(String name);
 	
 	
 	/**
@@ -55,10 +62,9 @@ public interface Model extends Observer{
 	 * Generate model.
 	 * this command Generate model.
 	 */
-	public void generateModel(String name, String[] params);
+	public void generateModel(String name, int x, int y, int z);
 	
 
-	
 	/**
 	 * Gets the solution.
 	 *
@@ -79,6 +85,7 @@ public interface Model extends Observer{
 	
 	/**
 	 * Cross section by.
+	 * @param <T>
 	 *
 	 * @param <T> the generic type
 	 * @param name the name
@@ -86,14 +93,8 @@ public interface Model extends Observer{
 	 * @param section the section
 	 * @return the searchable
 	 */
-	public <T> Searchable<T> CrossSectionBy(String name,String dimention , int section );	
+	public <T> Searchable<T> CrossSectionBy(String section, int index, String name);	
 	
-	/**
-	 * Exit.
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public void exit()  throws IOException;
 	
 	//public HashMap<String, Maze3d> getNameToMaze() ;
 
@@ -104,3 +105,4 @@ public interface Model extends Observer{
 	void exit(String string);
  
 }
+
