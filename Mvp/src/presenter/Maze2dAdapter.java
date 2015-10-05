@@ -3,6 +3,11 @@ package presenter;
 import algorithms.mazeGenerators.Maze2d;
 import view.Adapter;
 
+
+/**
+ * The Class Maze2dAdapter.
+ * Object adapter for maze2d
+ */
 public class Maze2dAdapter implements Adapter<int[][]> {
 	
 	
@@ -19,6 +24,9 @@ public class Maze2dAdapter implements Adapter<int[][]> {
 		this.maze = m;
 	}
 	
+	/* (non-Javadoc)
+	 * @see view.Adapter#getData()
+	 */
 	@Override
 	public int[][] getData() {
 		// TODO Auto-generated method stub

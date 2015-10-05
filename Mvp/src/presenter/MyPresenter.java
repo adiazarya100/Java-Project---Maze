@@ -17,6 +17,10 @@ import algorithms.search.Solution;
 import model.Model;
 import view.View;
 
+/**
+ * The Class MyPresenter.
+ * implementation the behavior of controller
+ */
 public class MyPresenter implements Presenter {
 
 	/** The model. */
@@ -29,6 +33,8 @@ public class MyPresenter implements Presenter {
 	HashMap<String, Command> commandsMap;
 
 	/**
+	 * Instantiates a new my presenter.
+	 *
 	 * @param myView the my view
 	 * @param myModel the my model
 	 */
@@ -40,6 +46,9 @@ public class MyPresenter implements Presenter {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see presenter.Presenter#getCommands()
+	 */
 	@Override
 	public HashMap<String, Command> getCommands() {
 
@@ -85,7 +94,13 @@ public class MyPresenter implements Presenter {
 	 * this command displays every files in the current path
 	 */
 	public class DirCommand implements Command {
+		
+		/** The args. */
 		String[] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand(){
 			try{
@@ -97,6 +112,10 @@ public class MyPresenter implements Presenter {
 			catch (ArrayIndexOutOfBoundsException e){
 				view.displayString("Error, no arguments");}
 		}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args){
 			this.args = args;}
@@ -109,7 +128,13 @@ public class MyPresenter implements Presenter {
 	 * this command solve given maze using the BFS or ASTAR algorithm
 	 */
 	public class SolveModelCommand implements Command{
+		
+		/** The args. */
 		String [] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand() {
 
@@ -118,6 +143,10 @@ public class MyPresenter implements Presenter {
 
 			model.ModelSolveing(args[1],args[2]);
 		}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}
@@ -130,8 +159,13 @@ public class MyPresenter implements Presenter {
 	 * this command generates Maze3d, sending name and 3 dimensions 
 	 */
 	public class GenerateModelCommand implements Command {
+		
+		/** The args. */
 		String [] args;
 
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand() {
 			//call the generate method & IsNumeric check if the args are integers.
@@ -139,6 +173,10 @@ public class MyPresenter implements Presenter {
 				model.generateModel(args[3] , Integer.parseInt(args[4]),Integer.parseInt(args[5]),Integer.parseInt(args[6])); 
 			else
 				System.out.println("Wrong input, please enter command + <name> + 3 argument stand for maze dimensions");}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}
@@ -151,11 +189,21 @@ public class MyPresenter implements Presenter {
 	 * this command gets name and file name and save the compressed maze
 	 */
 	public class SaveModelCommand implements Command {
+		
+		/** The args. */
 		String [] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand() {
 			model.saveModel(args[2], args[3]);
 		}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}
@@ -168,11 +216,21 @@ public class MyPresenter implements Presenter {
 	 * this command load compressed maze by given file name and maze name
 	 */
 	public class LoadModelCommand implements Command {
+		
+		/** The args. */
 		String [] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand() {
 			model.loadModel(args[2],args[3]);	
 		}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}
@@ -185,7 +243,13 @@ public class MyPresenter implements Presenter {
 	 * this command ask for the maze size in file
 	 */
 	public class ModelSizeInFileCommand implements Command {
+		
+		/** The args. */
 		String [] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand() {
 			try{
@@ -195,6 +259,10 @@ public class MyPresenter implements Presenter {
 				view.displayString("Invalid args");
 			}
 		}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}	
@@ -207,7 +275,13 @@ public class MyPresenter implements Presenter {
 	 * this command ask for the maze size in memory
 	 */
 	public class ModelSizeInMemoryCommand implements Command {
+		
+		/** The args. */
 		String [] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand() {
 			if(model.getNameToModel(args[2]) != null){
@@ -222,6 +296,10 @@ public class MyPresenter implements Presenter {
 				view.displayString("No such name");
 			}
 		}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}
@@ -233,13 +311,23 @@ public class MyPresenter implements Presenter {
 	 * The Class exit.
 	 */
 	public class ExitCommand implements Command{
+		
+		/** The args. */
 		String[] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand(){
 			if(args[0].equals("exit"))
 				model.exit(args[0]);
 			else
 				System.out.println("wrong input");}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}
@@ -248,7 +336,7 @@ public class MyPresenter implements Presenter {
 	
 	
 	/**
-	 * The method start ->from the presenter interface
+	 * The method start ->from the presenter interface.
 	 */
 	@Override
 	public void start() {
@@ -261,7 +349,8 @@ public class MyPresenter implements Presenter {
 	/**
 	 * Checks if is numeric.
 	 * this is validation that the user send integer arguments 
-	 * @param str.
+	 *
+	 * @param str the str
 	 * @return true, if is numeric
 	 */
 	public boolean isNumeric(String str)  
@@ -284,7 +373,13 @@ public class MyPresenter implements Presenter {
 	 * this command prints the given maze or solution or crossby
 	 */
 	public class DisplayModelCommand implements Command {
+		
+		/** The args. */
 		String [] args;
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#doCommand()
+		 */
 		@Override
 		public void doCommand() {
 			Searchable<Position> Maze3DSearchable; 
@@ -342,6 +437,10 @@ public class MyPresenter implements Presenter {
 				break;
 			}
 		}
+		
+		/* (non-Javadoc)
+		 * @see presenter.Command#setArguments(java.lang.String[])
+		 */
 		@Override
 		public void setArguments(String[] args) {
 			this.args = args;}
@@ -350,6 +449,9 @@ public class MyPresenter implements Presenter {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		

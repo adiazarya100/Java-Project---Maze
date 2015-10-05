@@ -1,5 +1,10 @@
 package view;
 
+/**
+ * The Interface Display.
+ * The displayer gets a drawable object.
+ * @param <T> the generic type
+ */
 public interface Display <T>{
 
 

@@ -2,6 +2,9 @@ package view;
 
 import java.io.PrintWriter;
 
+/**
+ * The Class Maze2dDisplayer.
+ */
 public class Maze2dDisplayer implements Display<int[][]> {
 
 	/** The draw. */

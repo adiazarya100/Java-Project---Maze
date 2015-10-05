@@ -17,8 +17,17 @@ import presenter.Presenter;
 import presenter.Properties;
 import view.MyView;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Run.
+ */
 public class Run {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 	
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -37,6 +46,11 @@ public class Run {
 
 	}
 	
+	/**
+	 * Read preferences.
+	 * read propetries from XML file.
+	 * @return the properties
+	 */
 	public static Properties readPreferences()
 	{
 		XMLDecoder d;

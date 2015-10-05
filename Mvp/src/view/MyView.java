@@ -13,6 +13,8 @@ import algorithms.search.Solution;
 
 /**
  * The Class MyView.
+ * This Class is an implementation of the interface view.
+ *  It is Observable and is being viewed by the Presenter
  */
 public class MyView extends Observable implements View   {
 	

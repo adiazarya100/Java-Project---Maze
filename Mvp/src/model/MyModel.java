@@ -40,19 +40,44 @@ import algorithms.search.Searchable;
 import algorithms.search.Searcher;
 import algorithms.search.Solution;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MyModel.
+ */
 public class MyModel extends Observable implements Model{
 
 
+	/** The hm. */
 	protected HashMap<String, Maze3d> HM;														
+	
+	/** The compressed hm. */
 	protected HashMap<String, String> compressedHM;
+	
+	/** The solution hm. */
 	protected HashMap<String, Solution<Position>> solutionHM;   // for every NAME maze save his solution.
+	
+	/** The maze to solution. */
 	protected HashMap<Maze3d, Solution<Position>> mazeToSolution; //for every maze save his solution.
+	
+	/** The Hash file size. */
 	protected HashMap<String, Integer> HashFileSize;
+	
+	/** The executor. */
 	private ListeningExecutorService executor; //Manage the thread pool.
+	
+	/** The properties. */
 	private Properties properties;
+	
+	/** The my compressor. */
 	MyCompressorOutputStream myCompressor;
+	
+	/** The my decompressor. */
 	MyDecompressorInputStream myDecompressor;
+	
+	/** The constant args. */
 	String [] constantArgs;
+	
+	/** The my xml encoder. */
 	XMLEncoder myXMLEncoder;
 	
 	/**
@@ -88,6 +113,8 @@ public class MyModel extends Observable implements Model{
 	/**
 	 * Instantiates a new my model. get a Preferences object!
 	 * SEC CTOR of MyModel()
+	 *
+	 * @param properties the properties
 	 */
 	public MyModel(Properties properties) {
 
@@ -121,10 +148,18 @@ public class MyModel extends Observable implements Model{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see model.Model#getHM()
+	 */
 	public HashMap<String, Maze3d> getHM() {
 		return HM;
 	}
 
+	/**
+	 * Sets the hm.
+	 *
+	 * @param hM the h m
+	 */
 	public void setHM(HashMap<String, Maze3d> hM) {
 		HM = hM;
 	}
@@ -468,6 +503,12 @@ public class MyModel extends Observable implements Model{
 	
 	
 	
+	/**
+	 * Save solution.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	/* (non-Javadoc)
 	 * save the solution and mazes name to zip file.
 	 */
@@ -488,6 +529,9 @@ public class MyModel extends Observable implements Model{
 
 	
 	
+	/**
+	 * Load solution.
+	 */
 	/* (non-Javadoc)
 	 * load the solution and mazes name from a zip file.
 	 */
@@ -539,6 +583,9 @@ public class MyModel extends Observable implements Model{
 	}
 
 
+	/**
+	 * Save properties.
+	 */
 	public void saveProperties(){
 
 		try {

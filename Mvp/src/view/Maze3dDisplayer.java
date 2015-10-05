@@ -3,6 +3,9 @@ package view;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
+/**
+ * The Class Maze3dDisplayer.
+ */
 public class Maze3dDisplayer implements Display<int[][][]> {
 
 	/** The draw. */

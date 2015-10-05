@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import presenter.Command;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CLI.
+ * this class also implements Runnable in order to later be run as a thread
  */
 public class CLI implements Runnable {
 
