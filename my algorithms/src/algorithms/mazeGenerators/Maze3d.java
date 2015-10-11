@@ -417,6 +417,7 @@ public class Maze3d{
 //		}
 //	}
 
+	
 	public void print() {
 		for(int i=0;i<this.getY();i++)
 		{
@@ -509,8 +510,115 @@ public class Maze3d{
 		return true;
 	}
 
+	/**
+	 * Generate walls.
+	 */
 
+
+	//public void walls(int x, int y, int z ,int gx, int gy, int gz  ){
+	public void walls(Position start, Position goal){
+		int i=0;
+		int j=0;
+		int z = 0;
+		
+	
+		
+		for(z=0;z<this.getY();z++){
+			
+		for(i=0;i< this.getZ() ;i++){
+			for(j=0;j<this.getX();j+=this.getX()-1){
+				maze[j][z][i] =1;}
+		}
+		
+		for(i=0;i< this.getZ() ;i+=this.getZ()-1){
+			for(j=0;j<this.getX();j++){
+				maze[j][z][i] =1;}
+		}
+	
+		}
+		maze[goal.getX()+2][goal.getY()][goal.getZ()+1] =0;
+		//Maze[start.getLine()-1][start.getFloor()][start.getColumn()] =0;
+		
+	}
+
+//************************************ update: new methods for gui *********************//
+	
+	
+	/**
+	 * Gets the cell value.
+	 * 
+	 * @param z
+	 *            -floor
+	 * @param x
+	 *            - length
+	 * @param y
+	 *            - width
+	 * @return the cell value
+	 */
+	public int getCellValue(int x, int y, int z) {
+		if(outOfRange(x, y, z)==true){
+		return this.maze[x][y][z];
+		}
+		else 
+			return 1;
+	}
 
 	
+	
+	
+	
+	/**
+	 * Sets the cell value.
+	 *
+	 * @param z
+	 *            -height
+	 * @param x
+	 *            - length
+	 * @param y
+	 *            - width
+	 * @param num
+	 */
+	public void setCellValue(int x, int y, int z, int num) {
+		if(outOfRange(x, y, z))
+		this.maze[x][y][z] = num;
+	}
+
+	/**
+	 * Position to int.
+	 *
+	 * @param Position
+	 * @return value
+	 */
+	
+	
+	/**
+	 * Out of range validation
+	 *
+	 * @param z
+	 *            -height
+	 * @param x
+	 *            - length
+	 * @param y
+	 *            - width
+	 * @return the boolean
+	 */
+/*	public Boolean outOfRange(int x, int y, int z) {
+
+		if (x >= 0 && y >= 0 && z >= 0 && x < this.maze.length
+				&& z < this.maze[0].length && y < this.maze[0][0].length) {
+			return true;
+		} else
+			return false;
+	}
+*/
+	public Boolean outOfRange(int x, int y, int z) {
+
+		if (x >= 0 && y >= 0 && z >= 0 && x < this.getX()
+				&& z < this.getZ() && y < this.getY()) {
+			return true;
+		} else
+			return false;
+	}
+
 }
 

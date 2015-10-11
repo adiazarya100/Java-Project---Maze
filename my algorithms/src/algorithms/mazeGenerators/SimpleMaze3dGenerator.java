@@ -32,6 +32,7 @@ public class SimpleMaze3dGenerator extends abstractMaze3dGenerator {
 			}
 			height++;
 		}
+		//maze.walls();
 		return maze;
 
 	}

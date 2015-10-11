@@ -9,6 +9,8 @@ import algorithms.search.State;
 
 /**This class represents Object adapter.
  * Doing Adaptation from Maze3d to search problem (searchable). */
+
+
 public class searchMaze3DAdapter implements Searchable <Position>{
 	
 	/** The searchable maze. */
@@ -23,6 +25,14 @@ public class searchMaze3DAdapter implements Searchable <Position>{
 	//C'tor
 	public searchMaze3DAdapter(Maze3d searchableMaze) {
 		super();
+		this.searchableMaze = searchableMaze;
+	}
+
+	public Maze3d getSearchableMaze() {
+		return searchableMaze;
+	}
+
+	public void setSearchableMaze(Maze3d searchableMaze) {
 		this.searchableMaze = searchableMaze;
 	}
 

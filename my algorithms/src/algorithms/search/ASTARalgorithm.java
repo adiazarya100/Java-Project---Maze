@@ -37,10 +37,13 @@ public class ASTARalgorithm <T> extends CommonSearcher<T>{
 	 */
 	@Override
 	public Solution<T> search(Searchable<T> s) { 
+
 		  System.out.println();
-		  System.out.println();
-		  System.out.println("Start"+s.getStartState());
-		  System.out.println("Goal"+s.getGoalState());
+		  
+			//if you want to print start position and goal position remove marks from the 2 line ahead:
+		  /*	System.out.println("Start"+s.getStartState());
+		  		System.out.println("Goal"+s.getGoalState());*/
+		  
 		  openList.add(s.getStartState()); //initialize priority queue
 		  HashSet<State<T>> closedSet=new HashSet<State<T>>();
 		  HashMap<State<T>, Double > CostForState =  new HashMap<State<T>, Double>(); //(state, cost)
@@ -61,7 +64,7 @@ public class ASTARalgorithm <T> extends CommonSearcher<T>{
 			
 		    ArrayList<State<T>> successors=new ArrayList<State<T>>();
 		    successors = s.getAllPossibleStates(state);
-		    System.out.println();
+		    //System.out.println();
 			 for(State<T> ss:successors)
 			 {
 				 

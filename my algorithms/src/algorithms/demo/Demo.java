@@ -18,10 +18,13 @@ import java.io.OutputStream;
 
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
+import algorithms.mazeGenerators.DFS;
+import algorithms.mazeGenerators.DFS2;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.mazeGenerators.Position;
+import algorithms.mazeGenerators.SimpleMaze3dGenerator;
 import algorithms.search.ASTARalgorithm;
 import algorithms.search.BFSalgorithm;
 import algorithms.search.EuclideanDistance;
@@ -35,8 +38,11 @@ public class Demo {
 	 */
 	public static void run(){
 		// Creates a new 3D maze using DFS algorithm, size (5,5,3), and prints it.
-		Maze3dGenerator maze3dGenerator = new MyMaze3dGenerator();
-		Maze3d maze = maze3dGenerator.generate(5,5,3);
+		Maze3dGenerator maze3dGenerator = new DFS2();
+		Maze3d maze = maze3dGenerator.generate(15,1,15);
+		System.out.println(maze.getStartPosition());
+		System.out.println(maze.getGoalPosition());
+		//maze.walls();
 		maze.print();
 		// Solving the maze using BFS
 		System.out.println();

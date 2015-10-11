@@ -45,7 +45,7 @@ public class Solution<T> {
 	 */
 	public String toString()
 	{
-		System.out.println();
+		//System.out.println();
 		StringBuilder sb = new StringBuilder();
 		for(State<T> s: solution)
 		{ sb.append(s+"<");
