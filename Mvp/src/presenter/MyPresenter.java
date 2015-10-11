@@ -497,8 +497,8 @@ public class MyPresenter implements Presenter {
 
 			case Enums.MODEL_SOLVED:
 
-				view.displayString(Enums.MODEL_SOLVED);
-				view.displaySolution(model.getSolution(args[1]));
+				//view.displayString(Enums.MODEL_SOLVED);
+				//view.displaySolution(model.getSolution(args[1]));
 
 				break;
 
@@ -515,10 +515,10 @@ public class MyPresenter implements Presenter {
 
 				break;
 
-			case Enums.MODEL_GENERATED:
+			case Enums.MODEL_GENERATED: 
 				searchMaze3DAdapter maze = new searchMaze3DAdapter(model.getHM().get(args[1]));
 				Maze3dAdapter mazeDrew = new Maze3dAdapter(maze.getSearchableMaze());
-				view.displayModel(mazeDrew);
+				//view.displayModel(mazeDrew);//פה אתה מדפיס אותו.....!!! פה אתה אומר למעשה לך לVIEW ותדפיס משם וה 
 
 				break;
 

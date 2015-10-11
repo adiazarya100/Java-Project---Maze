@@ -6,7 +6,7 @@ import view.Adapter;
  * The Class Maze3dAdapter.
  * Object adapter for maze3d
  */
-public class Maze3dAdapter implements Adapter<int[][][]>{
+public class Maze3dAdapter implements Adapter<Maze3d>{
 	
 	/** The maze. */
 	Maze3d maze;
@@ -25,9 +25,9 @@ public class Maze3dAdapter implements Adapter<int[][][]>{
 	 * @see view.Adapter#getData()
 	 */
 	@Override
-	public int[][][] getData() {
+	public Maze3d getData() {
 		// TODO Auto-generated method stub
-		return maze.getMaze();
+		return this.maze;
 	}
 
 }

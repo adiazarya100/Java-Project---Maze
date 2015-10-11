@@ -289,7 +289,8 @@ public class MyModel extends Observable implements Model{
 
 				@Override
 				public Maze3d call() throws Exception {
-					Maze3d maze = new MyMaze3dGenerator().generate(x, y, z);	
+					Maze3d maze = new DFS().generate(x, y, z); //has changed to simple.
+					maze.print();//just to print the maze to the log for testing...лап
 					return maze;
 				}
 			});
@@ -313,7 +314,7 @@ public class MyModel extends Observable implements Model{
 				@Override
 				public void onSuccess(Maze3d maze) {
 					HM.put(name, maze);
-					constantArgs[0] = Enums.MODEL_GENERATED;
+					constantArgs[0] = Enums.MODEL_GENERATED; 
 					constantArgs[1] = name;
 					setChanged();
 					//System.out.println(constantArgs[0]);
@@ -322,6 +323,7 @@ public class MyModel extends Observable implements Model{
 				}
 
 			});
+			
 		}	
 	}
 
