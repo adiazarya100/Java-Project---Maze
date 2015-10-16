@@ -34,12 +34,9 @@ public interface Board {
 	 
 	boolean hasPathFloorDown(int characterRow, int characterFloor ,int characterCol);
 	
-	
 /*	void applyInputDirection(Direction direction);
 
-
-	 
-	 void destructBoard();
+	void destructBoard();
 	
 	void displayProblem(Object o);*/
 	

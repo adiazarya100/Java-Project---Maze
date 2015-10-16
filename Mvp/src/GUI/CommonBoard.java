@@ -22,7 +22,7 @@ public abstract class CommonBoard extends Composite implements Board {
 
 	//boolean won=false;
 
-	CommonTile[][] board;
+	//CommonTile[][] board;
 
 	int boardRows; 
 
@@ -56,6 +56,7 @@ public abstract class CommonBoard extends Composite implements Board {
 			});
 				this.addKeyListener(new KeyListener(){	
 					@Override
+
 					public void keyPressed(KeyEvent e) { 
 						if (e.keyCode == 16777217 /*&& hasPathUp(currentX, currentFloorY, currentZ)*/){//UP
 							moveUp();} 

@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -13,12 +15,14 @@ import view.Adapter;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import algorithms.search.State;
 
 public class MazeBoard extends CommonBoard{
 
 	//ImageLoader gifs=new ImageLoader();
 
-
+	//Image image = new Image(getDisplay(), ".\\resources\\images\\mario.png");
+	Image image = new Image(getDisplay(), "./resources/images/mario.png");
 	ImageData[] images;
 
 	int frameIndex=0;
@@ -33,13 +37,15 @@ public class MazeBoard extends CommonBoard{
 
 	int GoalY;
 	
+	boolean[][][] hints;
+	
 	//int[][] mazeData2;
 	
 	int[][] tmpData=null;
 	int[][] tmpData2=null;
 	
 	Position position;
-	
+	boolean won=false;
 
 	public int exitX=0;
 	public int exitY=2;
@@ -54,7 +60,9 @@ public class MazeBoard extends CommonBoard{
 	}
 
 	@Override
-	public void drawBoard(PaintEvent e) { //this draw the maze!
+	public void drawBoard(PaintEvent e) { 
+		//this draw the maze!
+		
 		e.gc.setForeground(new Color(null,0,0,0));
 		   e.gc.setBackground(new Color(null,0,0,0));
 
@@ -78,14 +86,25 @@ public class MazeBoard extends CommonBoard{
 		        	  paintCube(dpoints, cheight,e);
 		          //draw the red ball!
 		          if(i==characterZ && j==characterX){
-					   e.gc.setBackground(new Color(null,200,0,0));
+					/*   e.gc.setBackground(new Color(null,200,0,0));
 					   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
 					   e.gc.setBackground(new Color(null,255,0,0));
-					   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
-					   e.gc.setBackground(new Color(null,0,0,0));				        	  
+					   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));*/
+					   e.gc.drawImage(image,  0, 0, image.getBounds().width,image.getBounds().height,(int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h)); 
+		        	   e.gc.setBackground(new Color(null,0,0,0));				        	  
+		          }
+		      
+		          
 		          }
 		      }
+		   if(characterX==tmp.getData().getGoalPosition().getX() && currentFloorY==tmp.getData().getGoalPosition().getY() && characterZ==tmp.getData().getGoalPosition().getZ()){
+	        	  getShell().setBackgroundImage(new Image(getDisplay(),".\\resources\\images\\won.jpg"));
+	        	  drawBoard(null);
+	  			  forceFocus();
+	  			  won=true;
 		   }
+		
+		
 	}
 	
 	private void paintCube(double[] p,double h,PaintEvent e){ //this draw the maze!
@@ -122,14 +141,27 @@ public class MazeBoard extends CommonBoard{
 		//mazeBoard.setLayoutData(new GridData (SWT.FILL, SWT.FILL,true,true,2,2));
 		//this.currentX=adapter.getData().getStartPosition().getX();
 		//this.currentZ=adapter.getData().getStartPosition().getZ();
+		this.hints = new boolean[tmp.getData().getX()][tmp.getData().getY()][tmp.getData().getZ()];
 	}
 
 
 	
 	@Override
 	public <T> void displaySolution(Solution<T> s) {
-		String Solution = s.toString();
-		Solution=Solution.replace("{", "");
+		
+		ArrayList<State<T>> myList = s.getSolution();
+
+			//int x = position.getX();
+			//int y = position.getY();
+			//int z = position.getZ();
+			//hints[z][x][y] = true;
+		
+		//setUserAskedForSolution(true);
+//	}
+		
+		//String Solution = s.toString();
+		
+	/*	Solution=Solution.replace("{", "");
 		Solution=Solution.replace("}", "");
 		String []path = Solution.split("<-");
 		//Image img = new Image(getDisplay(),".\\resources\\images\\mario.jpg"); //hint image
@@ -141,7 +173,7 @@ public class MazeBoard extends CommonBoard{
 			}
 	
 			drawBoard(null);
-			forceFocus();
+			forceFocus();*/
 	
 }
 
@@ -376,6 +408,7 @@ public class MazeBoard extends CommonBoard{
 			return false;}
 	}
 
+	
 
 
 

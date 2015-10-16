@@ -7,6 +7,18 @@ import org.eclipse.swt.widgets.Shell;
 
 public abstract class BasicWindow extends Observable implements Runnable{
 
+	public Display getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(Display display) {
+		this.display = display;
+	}
+
+	public void setShell(Shell shell) {
+		this.shell = shell;
+	}
+
 	Display display; 
 	Shell shell;
 	
