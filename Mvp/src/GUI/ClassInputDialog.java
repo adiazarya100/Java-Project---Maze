@@ -24,16 +24,21 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ClassInputDialog.
+ * A generic Dialog which supplies a form to submit data of every given class - even compatible with classes that contain enums as combo boxes
+ * 	upon pressing ok in the window an instance of the same class that was supplied will be returned.
+ */
 public class ClassInputDialog extends Dialog{
 
+	/** The shell. */
 	Shell shell;
-	/**	the generic class
-	 * 
-	 */
+	
+	/** 	the generic class. */
 	private Class<?> template;
-	/**	Property Descriptors give me the ability to see what properties the class contains - and has generic functionalities for setters and getters for fields!
-	 * 
-	 */
+	
+	/** 	Property Descriptors give me the ability to see what properties the class contains - and has generic functionalities for setters and getters for fields!. */
 	PropertyDescriptor[] descs;
 	/**	I wanna have a robust connection between a property to a text box - that way upon pressing OK I could know what class property was written in it.
 	 * 
@@ -58,11 +63,13 @@ public class ClassInputDialog extends Dialog{
 		    this(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL,template);
 		  }
 
-	  /** Ct'r with SWT style
-	 * @param parent - Shell
-	 * @param style - SWT style
-	 * @param template - The Class to create form to
-	 */
+	  /**
+  	 *  Ct'r with SWT style.
+  	 *
+  	 * @param parent - Shell
+  	 * @param style - SWT style
+  	 * @param template - The Class to create form to
+  	 */
 	public ClassInputDialog(Shell parent, int style,Class<?> template) {
 	    super(parent, style);
 	    this.template=template;
@@ -71,11 +78,21 @@ public class ClassInputDialog extends Dialog{
 	  }
 
 
-	  public Object getInput() {
+	  /**
+  	 * Gets the input.
+  	 *
+  	 * @return the input
+  	 */
+  	public Object getInput() {
 	    return input;
 	  }
 
-	  public void setInput(Object input) {
+	  /**
+  	 * Sets the input.
+  	 *
+  	 * @param input the new input
+  	 */
+  	public void setInput(Object input) {
 	    this.input = input;
 	  }
 
@@ -206,10 +223,13 @@ public class ClassInputDialog extends Dialog{
 
 	    shell.setDefaultButton(ok);
 	    }
-	  /**Helper to know if the text box has a number 
-	 * @param str - The string in the text box.
-	 * @return
-	 */
+	  
+  	/**
+  	 * Helper to know if the text box has a number .
+  	 *
+  	 * @param str - The string in the text box.
+  	 * @return true, if is numeric
+  	 */
 	private static boolean isNumeric(String str)
 	  {
 	    NumberFormat formatter = NumberFormat.getInstance();
