@@ -21,10 +21,8 @@ private static final long serialVersionUID = 1L;
 	 */
 	public enum MazeGenerator{
 		
-		/** The dfs. */
-		DFS,
-/** The random. */
-RANDOM
+		
+		DFS,RANDOM
 	}
 
 	/**
@@ -32,10 +30,8 @@ RANDOM
 	 */
 	public enum UI{
 		
-		/** The cli. */
-		CLI,
-/** The gui. */
-GUI
+	
+		CLI,GUI
 	}
 
 	/**
@@ -43,12 +39,8 @@ GUI
 	 */
 	public enum MazeSolver{
 		
-		/** The manhattan astar. */
-		MANHATTAN_ASTAR,
-/** The euclidian astar. */
-EUCLIDIAN_ASTAR,
-/** The bfs. */
-BFS
+		
+		MANHATTAN_ASTAR,EUCLIDIAN_ASTAR,BFS
 	}
 
 	/** The pool size. */
@@ -77,7 +69,7 @@ BFS
 	public Properties() {
 		
 		this.poolSize = Enums.DEFAULT_POOL_SIZE;
-		this.ui = UI.CLI;
+		this.ui = UI.GUI;
 		this.generator = MazeGenerator.DFS;
 		this.solver = MazeSolver.BFS;
 	}

@@ -102,7 +102,7 @@ public interface Model{
 	 * Exit.
 	 * @param string the string
 	 */
-	void exit(String string);
+	void exit();
  
 }
 

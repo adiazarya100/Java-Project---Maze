@@ -169,10 +169,16 @@ public class MyPresenter implements Presenter {
 		@Override
 		public void doCommand() {
 			//call the generate method & IsNumeric check if the args are integers.
-			if(args.length==7 && (isNumeric(args[4])==true) && (isNumeric(args[5])==true) && (isNumeric(args[6])==true))
-				model.generateModel(args[3] , Integer.parseInt(args[4]),Integer.parseInt(args[5]),Integer.parseInt(args[6])); 
+			if(args.length==7 && (isNumeric(args[4])==true) && (isNumeric(args[5])==true) && (isNumeric(args[6])==true)){
+				if(!model.getHM().containsKey(args[3])){
+				model.generateModel(args[3] , Integer.parseInt(args[4]),Integer.parseInt(args[5]),Integer.parseInt(args[6]));
+				}
+				else
+					view.displayString("Worng Input Name is Already Used!");}
+			
+				
 			else
-				System.out.println("Wrong input, please enter command + <name> + 3 argument stand for maze dimensions");}
+				view.displayString("Wrong input, please enter command + <name> + 3 argument stand for maze dimensions");}
 		
 		/* (non-Javadoc)
 		 * @see presenter.Command#setArguments(java.lang.String[])
@@ -225,7 +231,14 @@ public class MyPresenter implements Presenter {
 		 */
 		@Override
 		public void doCommand() {
-			model.loadModel(args[2],args[3]);	
+			
+			
+
+			try {
+				model.loadModel(args[2], args[3]);
+			} catch(ArrayIndexOutOfBoundsException c){
+				view.displayString("Invalid input or File Not Found");
+			}
 		}
 		
 		/* (non-Javadoc)
@@ -320,10 +333,16 @@ public class MyPresenter implements Presenter {
 		 */
 		@Override
 		public void doCommand(){
-			if(args[0].equals("exit"))
+/*			if(args[0].equals("exit")){
 				model.exit(args[0]);
+				view.exit();
+			}
 			else
-				System.out.println("wrong input");}
+				System.out.println("wrong input");}*/
+			
+			model.exit();
+			view.exit();
+		}
 		
 		/* (non-Javadoc)
 		 * @see presenter.Command#setArguments(java.lang.String[])
@@ -432,7 +451,7 @@ public class MyPresenter implements Presenter {
 					view.displayModel(myMaze3D);
 				}
 				else{
-					view.displayString("Invalid values");	
+					view.displayString("No Maze To Display!");	
 				}
 				break;
 			}
@@ -499,7 +518,16 @@ public class MyPresenter implements Presenter {
 
 				//view.displayString(Enums.MODEL_SOLVED);
 				//view.displaySolution(model.getSolution(args[1]));
+				//view.displayString(Constant.MODEL_SOLVED);
+				if(model.getSolution(args[1]) != null){
+					
+				view.displaySolution(model.getSolution(args[1]));
+				}
+				else{
+					view.displayString("Solution is not ready yet");
+				}
 
+				
 				break;
 
 			case Enums.MODEL_LOADED:

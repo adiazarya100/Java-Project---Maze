@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Observable;
 
 import presenter.Command;
+import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Solution;
 
 
@@ -166,7 +167,7 @@ public class MyView extends Observable implements View   {
 	 */
 	@Override
 	public <T> void displayModel(Adapter<T> draw) {
-		Maze3dDisplayerAdapter.getDisplayer((Adapter<int[][][]>) draw);
+		Maze3dDisplayerAdapter.getDisplayer((Adapter<Maze3d>) draw);
 		Maze3dDisplayerAdapter.display();
 
 		

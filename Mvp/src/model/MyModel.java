@@ -236,9 +236,14 @@ public class MyModel extends Observable implements Model{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 			Maze3d loaded = new Maze3d(b);
 			HM.put(name, loaded);
+			solutionHM.put(name, mazeToSolution.get(loaded));
+			System.out.println("blabla1");
+			System.out.println(mazeToSolution.get(loaded));
+			System.out.println("blabla2");
+			System.out.println(solutionHM.get(name));
 			compressedHM.put(name, fileName);
 			constantArgs[0] = Enums.MODEL_LOADED; 
 			setChanged();
@@ -289,9 +294,17 @@ public class MyModel extends Observable implements Model{
 
 				@Override
 				public Maze3d call() throws Exception {
+					
+					if(properties.generator.name().equals("DFS")){
 					Maze3d maze = new DFS().generate(x, y, z); //has changed to simple.
-					maze.print();//just to print the maze to the log for testing...лап
+					//maze.print(); //just to print the maze to the log for testing.
 					return maze;
+					}
+					else{
+						Maze3d maze = new SimpleMaze3dGenerator().generate(x, y, z); //has changed to simple.
+						//maze.print(); //just to print the maze to the log for testing.
+						return maze;
+					}
 				}
 			});
 		}
@@ -309,7 +322,7 @@ public class MyModel extends Observable implements Model{
 				public void onFailure(Throwable arg0) {
 					constantArgs[0] = Enums.MODEL_ERROR;
 					setChanged();
-					notifyObservers(constantArgs); //an error whike creating the maze.
+					notifyObservers(constantArgs); 
 				}
 				@Override
 				public void onSuccess(Maze3d maze) {
@@ -365,7 +378,7 @@ public class MyModel extends Observable implements Model{
 			if(solutionHM.get(name) != null){
 				constantArgs[0] = Enums.MODEL_SOLVED;
 				constantArgs[1] = name;
-				System.out.println("You already solved this maze :/ ");
+				//System.out.println("You already solved this maze :/ ");
 				setChanged();
 				notifyObservers(constantArgs);
 			}
@@ -420,8 +433,9 @@ public class MyModel extends Observable implements Model{
 
 				@Override
 				public void onFailure(Throwable sol) {
+					constantArgs[0] = Enums.MODEL_ERROR;
 					setChanged();
-					notifyObservers(Enums.MODEL_ERROR);
+					notifyObservers(constantArgs);
 				}
 
 
@@ -480,7 +494,10 @@ public class MyModel extends Observable implements Model{
 	 */
 	@Override
 	public Solution<Position> getSolution(String name) {
+		//Maze3d tmp=HM.get(name);
+		// mazeToSolution.get(tmp)
 		if(solutionHM.get(name) != null){
+			
 			return solutionHM.get(name);
 		}
 		return null;
@@ -559,9 +576,9 @@ public class MyModel extends Observable implements Model{
 	 * @see model.Model#exit(java.lang.String)
 	 */
 	@Override
-	public void exit(String string) {
+	public void exit() {
 		try{
-			System.out.println(string);
+			
 			FileOutputStream fos = new FileOutputStream("NameAndSize.txt");//save the maze into file before exit
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(HashFileSize);
