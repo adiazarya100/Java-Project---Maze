@@ -18,19 +18,9 @@ import algorithms.search.Solution;
 
 public abstract class CommonBoard extends Composite implements Board {
 
-	//Timer timer;
-
-	//boolean won=false;
-
-	//CommonTile[][] board;
-
 	int boardRows; 
 
 	int boardCols;
-
-	//MazeCharacter character;
-
-	//boolean checkDragged=false; 
 
 	Adapter<Maze3d> tmp;
 
@@ -39,10 +29,9 @@ public abstract class CommonBoard extends Composite implements Board {
 	int[][] mazeData;
 	
 	int currentFloorY;
-	
-	//public int currentX;
-	//public int currentZ;
+
 	public int characterX;
+	
 	public int characterZ;
 	
 		public CommonBoard(Composite parent, int style) {
