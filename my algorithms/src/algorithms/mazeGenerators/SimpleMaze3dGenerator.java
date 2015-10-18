@@ -15,8 +15,8 @@ public class SimpleMaze3dGenerator extends abstractMaze3dGenerator {
 	public Maze3d generate(int x, int y, int z) {
 
 		Maze3d maze=new Maze3d(x,y,z);
-        maze.startPosition= new Position(0, 0, 0); //define start point
-        maze.goalPosition= new Position(0, y, 0);   //define endpoint no mattar which floor
+        maze.startPosition= new Position(1, 0, 1); //define start point
+        maze.goalPosition= new Position(0, y-1, 0);   //define endpoint no mattar which floor
 		Random random = new Random();
 		int height = 0;
 		
@@ -32,8 +32,14 @@ public class SimpleMaze3dGenerator extends abstractMaze3dGenerator {
 			}
 			height++;
 		}
-		//maze.walls();
-		return maze;
+		for(int t=0; t< y; t++){
+			maze.maze[1][t][1]=0;
+		}
+			maze.maze[1][0][1]=0; //set static start position
+			maze.maze[1][y-1][1]=0; //set static goal posiiton
+		
+			maze.walls(maze.startPosition, maze.goalPosition);
+			return maze;
 
 	}
 
