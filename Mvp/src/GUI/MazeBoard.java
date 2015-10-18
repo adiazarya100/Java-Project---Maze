@@ -3,11 +3,14 @@ package GUI;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
 
 import presenter.Maze3dAdapter;
@@ -19,27 +22,46 @@ import algorithms.search.State;
 
 public class MazeBoard extends CommonBoard{
 
+	
+	
+/*	  static GC shellGC;
+	  static Color shellBackground;
+	  static ImageLoader loader;
+	  static ImageData[] imageDataArray;
+	  static Thread animateThread;
+	  //static Image image;
+	  static final boolean useGIFBackground = false;*/
+	
+	
+	
+	
 	//ImageLoader gifs=new ImageLoader();
 
 	//Image image = new Image(getDisplay(), ".\\resources\\images\\mario.png");
 	Image image = new Image(getDisplay(), "./resources/images/mario.png");
+	  //Image image = new Image(getDisplay(), "./resources/images/jazz.gif");
+	Image image2 = new Image(getDisplay(), "./resources/images/jazz.gif");
+	Image image3 = new Image(getDisplay(), "./resources/images/mushroom.png");
+	
 	ImageData[] images;
 
-	int frameIndex=0;
+	//int frameIndex=0;
 
-	int GoalX;
+	//int GoalX;
 	
-	int SourceX;
+	//int SourceX;
 
-	int GoalZ;
+	//int GoalZ;
 
-	int SourceZ;
+	//int SourceZ;
 
-	int GoalY;
+	//int GoalY;
 	
 	boolean[][][] hints;
 	
 	//int[][] mazeData2;
+	
+	int solution[] =null;
 	
 	int[][] tmpData=null;
 	int[][] tmpData2=null;
@@ -86,10 +108,10 @@ public class MazeBoard extends CommonBoard{
 		        	  paintCube(dpoints, cheight,e);
 		          //draw the red ball!
 		          if(i==characterZ && j==characterX){
-					/*   e.gc.setBackground(new Color(null,200,0,0));
+					   e.gc.setBackground(new Color(null,200,0,0));
 					   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
 					   e.gc.setBackground(new Color(null,255,0,0));
-					   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));*/
+					   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
 					   e.gc.drawImage(image,  0, 0, image.getBounds().width,image.getBounds().height,(int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h)); 
 		        	   e.gc.setBackground(new Color(null,0,0,0));				        	  
 		          }
@@ -106,6 +128,91 @@ public class MazeBoard extends CommonBoard{
 		
 		
 	}
+	
+	
+	/*@Override
+	public void drawBoard(PaintEvent e) { //this draw the maze!
+		e.gc.setForeground(new Color(null,0,0,0));
+		e.gc.setBackground(new Color(null,0,0,0));
+
+		int width=getSize().x;
+		int height=getSize().y;
+
+		int mx=(width/2);
+
+		double w=(double)width/mazeData[0].length;
+		double h=(double)height/mazeData.length;
+
+		        	  
+		for(int i=0;i<mazeData.length;i++){
+			// w22=0.7*w +0.3*w/mazeData.length;
+			
+			double w0=0.7*w +0.3*w*i/mazeData.length;
+			double w1=0.7*w +0.3*w*(i+1)/mazeData.length;
+			double start=mx-w0*mazeData[i].length/2;
+			double start1=mx-w1*mazeData[i].length/2;
+			Position solution = new Position(2,0,2);
+			int instanceWidth =4;
+			double instanceHeight =17.5;
+			
+			if(won==true){
+			//String []path = 
+			for(int d1=0;d1<mazeData.length;d1++){
+				double cheight2=h/2;
+				double w22=0.7*w +0.3*w*(d1+0.5)/mazeData.length;
+				double test = (w22*(instanceWidth+2));
+				double start2=mx-w22*mazeData[i].length/2;
+						
+				double []dpoints2={start2+d1*w22,d1*h};
+				e.gc.drawImage(image3, 0, 0, image3.getBounds().width,image3.getBounds().height,(int)Math.round(dpoints2[0]), (int)Math.round(dpoints2[1]-cheight2/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
+				
+			}
+			}
+			
+			//double test = (w22*(instanceWidth+2)); //maze starts at 4 tile
+			//double test1 = (w22*(instanceWidth+6));
+			//double test2= (w22*(instanceWidth+8));
+			//double test3 = (w22*(instanceWidth+12));
+			//double test2 =200;
+			//double test = (mx-w0*mazeData[i].length/2);
+			
+			
+			for(int j=0;j<mazeData[i].length;j++){
+				double []dpoints={start+j*w0,i*h,start+j*w0+w0,i*h,start1+j*w1+w1,i*h+h,start1+j*w1,i*h+h};
+
+				double cheight=h/2;
+				if(mazeData[i][j]!=0)
+					paintCube(dpoints, cheight,e);
+
+				//draw the red ball!
+				if(i==characterZ && j==characterX){
+					//e.gc.setBackground(new Color(null,200,0,0));
+					//e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
+					//e.gc.setBackground(new Color(null,255,0,0));
+					//e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
+					e.gc.drawImage(image,  0, 0, image.getBounds().width,image.getBounds().height,(int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
+					e.gc.setBackground(new Color(null,0,0,0));
+					//animation();
+				}
+			}
+		}
+		if(characterX==tmp.getData().getGoalPosition().getX() && currentFloorY==tmp.getData().getGoalPosition().getY() && characterZ==tmp.getData().getGoalPosition().getZ()){
+			e.gc.drawImage(image2,0,0);
+			//MessageBox messageBox = new MessageBox(getShell(),SWT.ICON_INFORMATION|SWT.OK);
+			//messageBox.setText("Information");
+			
+			//messageBox.setMessage(toPrint);
+			//messageBox.open();
+			
+      	  System.out.println("work");
+      	  
+      	  //drawBoard(null);
+			  //forceFocus();
+			  //won=true;
+	   }
+		
+	}*/
+	
 	
 	private void paintCube(double[] p,double h,PaintEvent e){ //this draw the maze!
         int[] f=new int[p.length];
@@ -141,7 +248,7 @@ public class MazeBoard extends CommonBoard{
 		//mazeBoard.setLayoutData(new GridData (SWT.FILL, SWT.FILL,true,true,2,2));
 		//this.currentX=adapter.getData().getStartPosition().getX();
 		//this.currentZ=adapter.getData().getStartPosition().getZ();
-		this.hints = new boolean[tmp.getData().getX()][tmp.getData().getY()][tmp.getData().getZ()];
+		//this.hints = new boolean[tmp.getData().getX()][tmp.getData().getY()][tmp.getData().getZ()];
 	}
 
 
@@ -176,6 +283,10 @@ public class MazeBoard extends CommonBoard{
 			forceFocus();*/
 	
 }
+	
+	void setSolutionArray(int[] array){
+    	  this.solution = array; 
+ }
 
 	public int getFloor() {
 		return currentFloorY;
@@ -408,8 +519,121 @@ public class MazeBoard extends CommonBoard{
 			return false;}
 	}
 
-	
+/*	
+	public void animation(){
+		//String fileName = dialog.open();
+		String fileName="/resources/images/jazz.gif";
+	    if (fileName != null) {
+	      loader = new ImageLoader();
+	      try {
+	        imageDataArray = loader.load(fileName);
+	        if (imageDataArray.length > 1) {
+	          animateThread = new Thread("Animation") {
+	            public void run() {
+	               Create an off-screen image to draw on, and fill it with the shell background. 
+	              Image offScreenImage = new Image(getDisplay(), loader.logicalScreenWidth, loader.logicalScreenHeight);
+	              GC offScreenImageGC = new GC(offScreenImage);
+	              offScreenImageGC.setBackground(shellBackground);
+	              offScreenImageGC.fillRectangle(0, 0, loader.logicalScreenWidth, loader.logicalScreenHeight);
+	                
+	              try {
+	                 Create the first image and draw it on the off-screen image. 
+	                int imageDataIndex = 0;  
+	                ImageData imageData = imageDataArray[imageDataIndex];
+	                if (image != null && !image.isDisposed()) image.dispose();
+	                image = new Image(getDisplay(), imageData);
+	                offScreenImageGC.drawImage(
+	                  image,
+	                  0,
+	                  0,
+	                  imageData.width,
+	                  imageData.height,
+	                  imageData.x,
+	                  imageData.y,
+	                  imageData.width,
+	                  imageData.height);
 
+	                 Now loop through the images, creating and drawing each one
+	                 * on the off-screen image before drawing it on the shell. 
+	                int repeatCount = loader.repeatCount;
+	                while (loader.repeatCount == 0 || repeatCount > 0) {
+	                  switch (imageData.disposalMethod) {
+	                  case SWT.DM_FILL_BACKGROUND:
+	                     Fill with the background color before drawing. 
+	                    Color bgColor = null;
+	                    if (useGIFBackground && loader.backgroundPixel != -1) {
+	                      bgColor = new Color(getDisplay(), imageData.palette.getRGB(loader.backgroundPixel));
+	                    }
+	                    offScreenImageGC.setBackground(bgColor != null ? bgColor : shellBackground);
+	                    offScreenImageGC.fillRectangle(imageData.x, imageData.y, imageData.width, imageData.height);
+	                    if (bgColor != null) bgColor.dispose();
+	                    break;
+	                  case SWT.DM_FILL_PREVIOUS:
+	                     Restore the previous image before drawing. 
+	                    offScreenImageGC.drawImage(
+	                      image,
+	                      0,
+	                      0,
+	                      imageData.width,
+	                      imageData.height,
+	                      imageData.x,
+	                      imageData.y,
+	                      imageData.width,
+	                      imageData.height);
+	                    break;
+	                  }
+	                            
+	                  imageDataIndex = (imageDataIndex + 1) % imageDataArray.length;
+	                  imageData = imageDataArray[imageDataIndex];
+	                  image.dispose();
+	                  image = new Image(getDisplay(), imageData);
+	                  offScreenImageGC.drawImage(
+	                    image,
+	                    0,
+	                    0,
+	                    imageData.width,
+	                    imageData.height,
+	                    imageData.x,
+	                    imageData.y,
+	                    imageData.width,
+	                    imageData.height);
+	                  
+	                   Draw the off-screen image to the shell. 
+	                  shellGC.drawImage(offScreenImage, 0, 0);
+	                  
+	                   Sleep for the specified delay time (adding commonly-used slow-down fudge factors). 
+	                  try {
+	                    int ms = imageData.delayTime * 10;
+	                    if (ms < 20) ms += 30;
+	                    if (ms < 30) ms += 10;
+	                    Thread.sleep(ms);
+	                  } catch (InterruptedException e) {
+	                  }
+	                  
+	                   If we have just drawn the last image, decrement the repeat count and start again. 
+	                  if (imageDataIndex == imageDataArray.length - 1) repeatCount--;
+	                }
+	              } catch (SWTException ex) {
+	                System.out.println("There was an error animating the GIF");
+	              } finally {
+	                if (offScreenImage != null && !offScreenImage.isDisposed()) offScreenImage.dispose();
+	                if (offScreenImageGC != null && !offScreenImageGC.isDisposed()) offScreenImageGC.dispose();
+	                if (image != null && !image.isDisposed()) image.dispose();
+	              }
+	            }
+	          };
+	          animateThread.setDaemon(true);
+	          animateThread.start();
+	        }
+	      } catch (SWTException ex) {
+	        System.out.println("There was an error loading the GIF");
+	      }
+	    }
 
+	    while (!getShell().isDisposed()) {
+	      if (!getDisplay().readAndDispatch()) getDisplay().sleep();
+	    }
+	    getDisplay().dispose();
+	  	}*/
 
 }
