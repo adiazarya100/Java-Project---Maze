@@ -1,8 +1,10 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 /** This class represent positions in the maze.  */
 
-public class Position{
+public class Position implements Serializable{
 	
 	/**
 	 * Instantiates a new position.

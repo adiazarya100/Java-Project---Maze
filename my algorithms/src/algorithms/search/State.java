@@ -1,5 +1,7 @@
 package algorithms.search;
 
+import java.io.Serializable;
+
 /**
  *  Since each node in the maze represents a “state” of the problem, we can create a State class
  * Inside, we can use whatever types that can describe states generally.
@@ -8,7 +10,7 @@ package algorithms.search;
  *
  * @param <T> the generic type
  */ 
-public class State <T> implements Comparable<State<T>>{
+public class State <T> implements Comparable<State<T>>, Serializable{
 	
 	/** The state. */
 	private String state; //state represented by string

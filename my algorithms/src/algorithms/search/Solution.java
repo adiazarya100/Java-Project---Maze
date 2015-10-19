@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  *
  * @param <T> the generic type
  */
-public class Solution<T> {
+public class Solution<T> implements Serializable{
 
 	/** The solution. */
 	private ArrayList<State<T>> solution = new ArrayList<State<T>>(); 
@@ -48,7 +49,7 @@ public class Solution<T> {
 		//System.out.println();
 		StringBuilder sb = new StringBuilder();
 		for(State<T> s: solution)
-		{ sb.append(s+"<");
+		{ sb.append(s+" ");
 		}
 		return sb.toString();
 	}

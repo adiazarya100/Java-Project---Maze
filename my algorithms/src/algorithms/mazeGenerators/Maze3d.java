@@ -4,6 +4,7 @@ package algorithms.mazeGenerators;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 // TODO: Auto-generated Javadoc
 /** Maze3d is 3 dimensional array represent maze game.*/
 
-public class Maze3d{
+public class Maze3d implements Serializable{
 
 	/** The x. */
 	private int x;
