@@ -55,6 +55,7 @@ public class MazeWindow extends BasicWindow implements View{
 	Maze3d dataRecieved=null; 
 
 	CommonBoard boardWidget;
+	
 	MazeBoard mazeBoard;
 	
 	boolean boolDisplay=false;
@@ -88,27 +89,20 @@ public class MazeWindow extends BasicWindow implements View{
 		DisplayButton.setText("Display The Maze");
 		DisplayButton.setLayoutData(new GridData(SWT.FILL, SWT.None, true, false, 1, 1));
 
-		//HelpMeButton//
-		Button HelpMe=new Button(shell, SWT.PUSH);
-		HelpMe.setText("Help Me!");
-		HelpMe.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
-
-		//SolveButton//
-		Button SolveButton=new Button(shell, SWT.PUSH);
-		SolveButton.setText("Solve The Maze");
-		SolveButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
-
-		//EXIT Button//
-		Button exit=new Button(shell, SWT.PUSH);
-		exit.setText("Exit");
-		exit.setLayoutData(new GridData(SWT.FILL, SWT.None, true, false, 2, 1));
-
 		//newProperties Button//
 		Button newProperties=new Button(shell, SWT.PUSH);
 		newProperties.setText("New Properties");
 		newProperties.setLayoutData(new GridData(SWT.FILL, SWT.None, true, false, 2, 1));
 
-
+		//HelpMeButton//
+		Button HelpMe=new Button(shell, SWT.PUSH);
+		HelpMe.setText("Help Me!");
+		HelpMe.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
+		
+		//EXIT Button//
+		Button exit=new Button(shell, SWT.PUSH);
+		exit.setText("Exit");
+		exit.setLayoutData(new GridData(SWT.FILL, SWT.None, true, false, 2, 1));
 
 		//EXIT Button Listener//	
 		exit.addSelectionListener(new SelectionListener(){
@@ -211,30 +205,6 @@ public class MazeWindow extends BasicWindow implements View{
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 
-		//Solve Button Listener/
-		SolveButton.addSelectionListener(new SelectionListener(){
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				if(input!=null ){
-					String [] args= {"solve",input.getMazeName(),"astar"};
-
-					Command command= commands.get("solve");
-					command.setArguments(args);
-					setUserCommand(command);
-
-
-				}
-				else{ //if there is no maze to solve
-					displayString("No Maze to Solve, Try To Generate It First! ");	
-				}
-			}
-
-		});
 
 		//HelpMe Button Listener//	
 		HelpMe.addSelectionListener(new SelectionListener(){
@@ -245,7 +215,8 @@ public class MazeWindow extends BasicWindow implements View{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if(input!=null ){
-					String [] args= {"solve",input.getMazeName(),"astar"};
+			
+					String [] args= {"solve",input.getMazeName(),"bfs"};
 
 					Command command= commands.get("solve");
 					command.setArguments(args);
@@ -796,33 +767,34 @@ public class MazeWindow extends BasicWindow implements View{
 	public <T> void displayCrossSectionBy(Adapter<T> draw) {}
 
 	@Override
-	public <T> void displaySolution(Solution<T> solution) {
-
-		//this.displayString(solution.toString());
+	public <T> void displaySolution(Solution<T> s) {
+		//mazeBoard.displaySolution(s);
 		int xz = 0;
 		int xt = 0;
 		int yt = 0;
-		String Solution = solution.toString();
+		int index =0;
+		String Solution = s.toString();
 		Solution=Solution.replace("(", "");
 		Solution=Solution.replace(")", "");
 		String []path = Solution.split(" ");
 		
-		int[]tmpArray =new int[path.length];
+		int[]tmpArray =new int[(path.length)*3];
 		String[] tmp = null;
 		//System.out.println(path.length-1);
 		
 		for(int i=0;i<path.length;i++){
 		  tmp = path[i].split(",");
-		  System.out.println(path[i]);
-		  tmpArray[i] = Integer.parseInt(tmp[0]);
-		  tmpArray[i+1] = Integer.parseInt(tmp[1]);
-		  tmpArray[i+2] = Integer.parseInt(tmp[2]);
+		  xz = Integer.parseInt(tmp[0]);
+		  xt = Integer.parseInt(tmp[1]);
+		  yt = Integer.parseInt(tmp[2]);
+		  
+		  tmpArray[index] = xz;
+		  tmpArray[index+1] = xt;
+		  tmpArray[index+2] = yt;
+		  index+=3;
+		  
 		}
-		System.out.println("work");
 		mazeBoard.setSolutionArray(tmpArray);
-		System.out.println(tmpArray[0]);
-		System.out.println(tmpArray[1]);
-		System.out.println(tmpArray[2]);
 		mazeBoard.won =true;
 	}
 
