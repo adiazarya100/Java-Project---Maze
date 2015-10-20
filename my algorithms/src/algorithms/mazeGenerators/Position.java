@@ -164,9 +164,6 @@ public class Position implements Serializable{
 		return ("(" + x +"," + y + "," + z + ")");
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 
 	
 	
@@ -180,6 +177,11 @@ public class Position implements Serializable{
 		}
 		return tmp2;
 	}
+
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 
 	@Override
 	public boolean equals(Object obj) {
