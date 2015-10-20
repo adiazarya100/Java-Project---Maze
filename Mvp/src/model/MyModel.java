@@ -84,6 +84,8 @@ public class MyModel extends Observable implements Model{
 	/** The my xml encoder. */
 	XMLEncoder myXMLEncoder;
 	
+	protected boolean loaded;
+	
 	/**
 	 * Instantiates a new my model.
 	 * FIRST CTOR of MyModel()
@@ -264,6 +266,8 @@ public class MyModel extends Observable implements Model{
 	 */
 	@Override
 	public void loadModel(String fileName, String name) {
+		
+		loaded=true;
 		try {
 			InputStream in = new MyDecompressorInputStream(new FileInputStream(fileName));
 			byte b[] = new byte[HashFileSize.get(fileName)];
@@ -427,11 +431,12 @@ public class MyModel extends Observable implements Model{
 				if (temp!=null)
 				 flag = true;
 		}
+		String tmp;
 		if(flag == true){  //IF The Maze is already solved.
 			
-			System.out.println(mazeToSolution.get(HM.get(name)));
+			//stem.out.println(mazeToSolution.get(HM.get(name)));
 			solutionHM.put(name, temp);
-			System.out.println(solutionHM.get(name));
+			//System.out.println(solutionHM.get(name));
 			constantArgs[0] = Enums.SOLVED;
 			constantArgs[1] = name;
 			setChanged();
@@ -440,8 +445,12 @@ public class MyModel extends Observable implements Model{
 		}
 			
 		else if(HM.containsKey(name)){
-			//switch(algorithm.toLowerCase()){
-			switch(properties.solver.name().toLowerCase()){
+			if(algorithm!="null")
+			 tmp = algorithm;
+			else
+			 tmp = properties.solver.name().toLowerCase();
+			
+			switch(tmp.toLowerCase()){
 			case "bfs":
 				System.out.println("Attention: using bfs");
 				searchMaze3DAdapter bfsMaze= new searchMaze3DAdapter(current);
@@ -568,12 +577,16 @@ public class MyModel extends Observable implements Model{
 	 */
 	@Override
 	public Solution<Position> getSolution(String name) {
-		//Maze3d tmp=HM.get(name);
-		// mazeToSolution.get(tmp)
+		if(loaded==true){
+			this.ModelSolveing(name, "");
+			loaded=false;
+		}
+		
 		if(solutionHM.get(name) != null){
 			
 			return solutionHM.get(name);
 		}
+		
 		return null;
 	}
 	
