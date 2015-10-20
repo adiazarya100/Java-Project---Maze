@@ -12,10 +12,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -35,6 +38,7 @@ import algorithms.demo.searchMaze3DAdapter;
 import algorithms.mazeGenerators.*;
 import algorithms.search.ASTARalgorithm;
 import algorithms.search.BFSalgorithm;
+import algorithms.search.EuclideanDistance;
 import algorithms.search.ManhattanDistance;
 import algorithms.search.Searchable;
 import algorithms.search.Searcher;
@@ -92,7 +96,7 @@ public class MyModel extends Observable implements Model{
 		loadSolution(); //load all possible solutions.
 		executor=MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(5)); //Initialize the ThreadPool with 5 threads.
 		HashFileSize = null;
-		
+		solutionHM= new HashMap<String, Solution<Position>> ();
 		try
 		{
 			//Read from this file all the data into HashFileSize when the program starts.
@@ -107,6 +111,22 @@ public class MyModel extends Observable implements Model{
 		}catch(ClassNotFoundException c)
 		{
 			c.printStackTrace();
+		}try {
+			File f = new File(Enums.FILE_PATH);
+			if(f.exists()){
+				System.out.println("file exists Solutions.zip");
+				FileInputStream fis = new FileInputStream(f);
+				GZIPInputStream gis = new GZIPInputStream(fis);
+				ObjectInputStream ois = new ObjectInputStream(gis);
+				mazeToSolution = (HashMap <Maze3d,Solution<Position>>)ois.readObject();
+				ois.close();
+				fis.close();
+			}
+		}catch (ClassNotFoundException c) {
+			// TODO Auto-generated catch block
+			c.printStackTrace();
+		} catch (IOException e) {
+			mazeToSolution = new HashMap <Maze3d,Solution<Position>>();
 		}
 	}
 
@@ -116,36 +136,59 @@ public class MyModel extends Observable implements Model{
 	 *
 	 * @param properties the properties
 	 */
-	public MyModel(Properties properties) {
 
-		this.HM = new HashMap<String, Maze3d>();
-		this.compressedHM = new HashMap<String, String>();
-		this.solutionHM = new HashMap<String, Solution<Position>>();
-		this.mazeToSolution = new HashMap<Maze3d, Solution<Position>>();
-		this.myCompressor = null;
-		this.myDecompressor = null;
-		this.constantArgs = new String[2];
-		loadSolution();
-		this.properties = properties;
-		executor=MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(properties.poolSize));
-		HashFileSize = null;
-		
-		try
-		{
-			//Read from this file all the data into HashFileSize when the program starts.
-			FileInputStream fis = new FileInputStream("NameAndSize.txt"); 
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			HashFileSize = (HashMap)ois.readObject();
-			ois.close();
-			fis.close();
-		}catch(IOException ioe)
-		{
-			HashFileSize = new HashMap<String, Integer>();
-		}catch(ClassNotFoundException c)
-		{
-			c.printStackTrace();
+
+		public MyModel(presenter.Properties properties) {
+
+			this.HM = new HashMap<String, Maze3d>();
+			this.compressedHM = new HashMap<String, String>();
+			this.solutionHM = new HashMap<String, Solution<Position>>();
+			this.mazeToSolution = new HashMap<Maze3d, Solution<Position>>();
+			this.myCompressor = null;
+			this.myDecompressor = null;
+			this.constantArgs = new String[2];
+			//loadSolution();
+			this.properties = properties;
+			executor=MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(5)); //cjange to properties.poolSize
+			HashFileSize = null;
+
+			try
+			{
+				//Read from this file all the data into HashFileSize when the program starts.
+				FileInputStream fis = new FileInputStream("NameAndSize.txt"); 
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				HashFileSize = (HashMap)ois.readObject();
+				ois.close();
+				fis.close();
+			}catch(IOException ioe)
+			{
+				HashFileSize = new HashMap<String, Integer>();
+			}catch(ClassNotFoundException c)
+			{
+				c.printStackTrace();
+			}try {
+				//FileInputStream fis = new FileInputStream(Enums.FILE_PATH);
+				File f = new File(Enums.FILE_PATH);
+				if(f.exists()){
+					System.out.println("file exists Solutions.zip");
+					FileInputStream fis = new FileInputStream(f);
+					GZIPInputStream gis = new GZIPInputStream(fis);
+					ObjectInputStream ois = new ObjectInputStream(gis);
+					mazeToSolution = (HashMap <Maze3d,Solution<Position>>)ois.readObject();
+					ois.close();
+					fis.close();
+				}
+				
+
+			}catch (ClassNotFoundException c) {
+				// TODO Auto-generated catch block
+				c.printStackTrace();
+			} catch (IOException e) {
+				mazeToSolution = new HashMap <Maze3d,Solution<Position>>();
+			}
+
+
 		}
-	}
 
 
 	/* (non-Javadoc)
@@ -240,10 +283,10 @@ public class MyModel extends Observable implements Model{
 			Maze3d loaded = new Maze3d(b);
 			HM.put(name, loaded);
 			solutionHM.put(name, mazeToSolution.get(loaded));
-			System.out.println("blabla1");
+/*			System.out.println("blabla1");
 			System.out.println(mazeToSolution.get(loaded));
 			System.out.println("blabla2");
-			System.out.println(solutionHM.get(name));
+			System.out.println(solutionHM.get(name));*/
 			compressedHM.put(name, fileName);
 			constantArgs[0] = Enums.MODEL_LOADED; 
 			setChanged();
@@ -373,20 +416,34 @@ public class MyModel extends Observable implements Model{
 
 		ListenableFuture<Solution<Position>> futureSolution = null; //Initialize futureSolution.
 		Maze3d current = HM.get(name); 
-
-		//if(current != null){  //IF The Maze is already solved.
-			if(solutionHM.get(name) != null){
-				constantArgs[0] = Enums.MODEL_SOLVED;
-				constantArgs[1] = name;
-				//System.out.println("You already solved this maze :/ ");
-				setChanged();
-				notifyObservers(constantArgs);
-			}
-		//}
-
-		if(HM.containsKey(name)){
-			switch(algorithm.toLowerCase()){
+		Solution<Position> temp = null;
+		boolean flag = false;
+		Iterator it = mazeToSolution.entrySet().iterator();
+		
+		while (it.hasNext() && !flag) {
+			Map.Entry pair = (Map.Entry)it.next();
+			if(pair.getKey().equals(current))
+				temp = (Solution<Position>) pair.getValue();
+				if (temp!=null)
+				 flag = true;
+		}
+		if(flag == true){  //IF The Maze is already solved.
+			
+			System.out.println(mazeToSolution.get(HM.get(name)));
+			solutionHM.put(name, temp);
+			System.out.println(solutionHM.get(name));
+			constantArgs[0] = Enums.SOLVED;
+			constantArgs[1] = name;
+			setChanged();
+			notifyObservers(constantArgs);
+			
+		}
+			
+		else if(HM.containsKey(name)){
+			//switch(algorithm.toLowerCase()){
+			switch(properties.solver.name().toLowerCase()){
 			case "bfs":
+				System.out.println("Attention: using bfs");
 				searchMaze3DAdapter bfsMaze= new searchMaze3DAdapter(current);
 				futureSolution=executor.submit(new Callable<Solution<Position>>() {
 
@@ -400,22 +457,39 @@ public class MyModel extends Observable implements Model{
 							return null;
 						}
 						else{
-						System.out.println(s);
+						//System.out.println(s);
 						return s;
 						}
 					}
 				});
 				break;
 
-			case "astar":
-				searchMaze3DAdapter astarMaze= new searchMaze3DAdapter(current);
+			case "manhattanastar":
+				System.out.println("Attention: using manhattan_astar");
+				searchMaze3DAdapter manhattanAstarMaze= new searchMaze3DAdapter(current);
 				futureSolution=executor.submit(new Callable<Solution<Position>>() {
 					@Override
 					public Solution<Position> call() throws Exception {
 						Searcher<Position> searcherAStar= new ASTARalgorithm<Position>(new ManhattanDistance());
 						Solution<Position> s = new Solution<Position>();
-						s= searcherAStar.search(astarMaze);
-						System.out.println(s);
+						s= searcherAStar.search(manhattanAstarMaze);
+						//System.out.println(s);
+						return s;
+					}
+				});
+
+				break;
+				
+			case "euclidianastar":
+				System.out.println("Attention: using euclidian_astar");
+				searchMaze3DAdapter euclidianAstarMaze= new searchMaze3DAdapter(current);
+				futureSolution=executor.submit(new Callable<Solution<Position>>() {
+					@Override
+					public Solution<Position> call() throws Exception {
+						Searcher<Position> searcherAStar= new ASTARalgorithm<Position>(new EuclideanDistance());
+						Solution<Position> s = new Solution<Position>();
+						s= searcherAStar.search(euclidianAstarMaze);
+						//System.out.println(s);
 						return s;
 					}
 				});
@@ -538,7 +612,10 @@ public class MyModel extends Observable implements Model{
 			ObjectOutputStream out=new ObjectOutputStream(gzos);
 			out.writeObject(mazeToSolution);
 			out.flush();
+			gzos.flush();
 			out.close();
+			fos.flush();
+			
 		}
 		catch (IOException e) {
 			e.getStackTrace();
@@ -555,19 +632,23 @@ public class MyModel extends Observable implements Model{
 	 * load the solution and mazes name from a zip file.
 	 */
 	private void loadSolution() {
-
+		
 		try {
 			FileInputStream fos=new FileInputStream(Enums.FILE_PATH);
 			GZIPInputStream gzos=new GZIPInputStream(fos);
 			ObjectInputStream out=new ObjectInputStream(gzos);
-			mazeToSolution = (HashMap<Maze3d, Solution<Position>>) out.readObject();
+			mazeToSolution = (HashMap<Maze3d, Solution<Position>>)out.readObject();
 			out.close();
+
 		}
 		catch (  IOException e) {
 			e.getStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		} 
+
+		//Object value = mazeToSolution.get(HM);
+		System.out.println("test");
 	}
 
 	
