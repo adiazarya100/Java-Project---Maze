@@ -1,8 +1,5 @@
 package GUI;
 
-import generic.Run;
-import generic.RunCLI;
-import generic.RunGUI;
 import generic.WritePropertiesGUI;
 
 import java.beans.XMLDecoder;
@@ -29,6 +26,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import boot.Run;
+import boot.RunCLI;
+import boot.RunGUI;
 import presenter.Command;
 import presenter.Properties;
 import algorithms.mazeGenerators.Maze3d;
@@ -216,7 +216,7 @@ public class MazeWindow extends BasicWindow implements View{
 			public void widgetSelected(SelectionEvent arg0) {
 				if(input!=null ){
 			
-					String [] args= {"solve",input.getMazeName(),"bfs"};
+					String [] args= {"solve",input.getMazeName(),"null"};
 
 					Command command= commands.get("solve");
 					command.setArguments(args);
