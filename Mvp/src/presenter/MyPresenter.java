@@ -140,8 +140,9 @@ public class MyPresenter implements Presenter {
 
 			if(model.getNameToModel(args[1]) == null){
 				view.displayString("The model " + args[1] + " does not exist." );}
-
+			
 			model.ModelSolveing(args[1],args[2]);
+			view.displayString("model solved");
 		}
 		
 		/* (non-Javadoc)
@@ -204,7 +205,10 @@ public class MyPresenter implements Presenter {
 		 */
 		@Override
 		public void doCommand() {
-			model.saveModel(args[2], args[3]);
+			if(args[0].equals("save") && args[1].equals("maze")){
+			model.saveModel(args[2], args[3]);}
+			else
+				view.displayString("Wrong Input, Try Again!");
 		}
 		
 		/* (non-Javadoc)
@@ -405,10 +409,11 @@ public class MyPresenter implements Presenter {
 			Searchable<Position> Maze2DSearchable;
 			Maze3dAdapter myMaze3D;
 			Maze2dAdapter myMaze2D;
-
+			
 			
 			switch (args[1]) {
 			case "solution":
+				if(args.length>2){
 				if(model.getNameToModel(args[2]) == null){
 					view.displayString("No record of " + args[2]+ ". Try to create it first");
 				}
@@ -421,7 +426,9 @@ public class MyPresenter implements Presenter {
 						view.displayString("No solution for " + args[2]+ ". Try to create it first");
 					}
 
-				}
+				}}
+				else
+					view.displayString("Wrong Input, check name please!");
 
 				break;
 
