@@ -479,6 +479,25 @@ public class Maze3d implements Serializable{
 
 
 	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((goalPosition == null) ? 0 : goalPosition.hashCode());
+		result = prime * result + Arrays.hashCode(maze);
+		result = prime * result
+				+ ((startPosition == null) ? 0 : startPosition.hashCode());
+		result = prime * result + x;
+		result = prime * result + y;
+		result = prime * result + z;
+		return result;
+	}
+
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -510,9 +529,14 @@ public class Maze3d implements Serializable{
 			return false;
 		return true;
 	}
+	
+	
 
 	/**
 	 * Generate walls.
+	 *
+	 * @param start the start
+	 * @param goal the goal
 	 */
 
 
@@ -546,16 +570,13 @@ public class Maze3d implements Serializable{
 	
 	
 	/**
-	 * Gets the cell value.
-	 * 
-	 * @param z
-	 *            -floor
-	 * @param x
-	 *            - length
-	 * @param y
-	 *            - width
-	 * @return the cell value
-	 */
+ * Gets the cell value.
+ *
+ * @param x            - length
+ * @param y            - width
+ * @param z            -floor
+ * @return the cell value
+ */
 	public int getCellValue(int x, int y, int z) {
 		if(outOfRange(x, y, z)==true){
 		return this.maze[x][y][z];
@@ -571,13 +592,10 @@ public class Maze3d implements Serializable{
 	/**
 	 * Sets the cell value.
 	 *
-	 * @param z
-	 *            -height
-	 * @param x
-	 *            - length
-	 * @param y
-	 *            - width
-	 * @param num
+	 * @param x            - length
+	 * @param y            - width
+	 * @param z            -height
+	 * @param num the num
 	 */
 	public void setCellValue(int x, int y, int z, int num) {
 		if(outOfRange(x, y, z))
@@ -587,7 +605,9 @@ public class Maze3d implements Serializable{
 	/**
 	 * Position to int.
 	 *
-	 * @param Position
+	 * @param x the x
+	 * @param y the y
+	 * @param z the z
 	 * @return value
 	 */
 	
