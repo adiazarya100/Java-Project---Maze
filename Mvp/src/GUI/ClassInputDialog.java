@@ -8,6 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -43,7 +45,9 @@ public class ClassInputDialog extends Dialog{
 	/**	I wanna have a robust connection between a property to a text box - that way upon pressing OK I could know what class property was written in it.
 	 * 
 	 */
-	HashMap<PropertyDescriptor,Text> txtMap=new HashMap<PropertyDescriptor,Text>();
+	HashMap<PropertyDescriptor,Text> txtMap=new LinkedHashMap<PropertyDescriptor,Text>();
+	//TreeMap<String,Text> txtMapOrderName=new TreeMap<String,Text>();
+	//Map<PropertyDescriptor, Text> txtMap = Collections.synchronizedMap(new LinkedHashMap<PropertyDescriptor, Text>());
 	/**	The bonus demanded that this dialog will support all given classes
 	 * 	but what happens when a class has an enum? a whole new story with combo-boxes and once again I wanna have a connection between the class field enum to the String that was selected in the form.
 	 * 
@@ -136,6 +140,10 @@ public class ClassInputDialog extends Dialog{
 		    	    data.horizontalSpan = 2;
 		    	    text.setLayoutData(data);
 		    	    txtMap.put(propDesc, text);
+		    	   // txtMapOrderName.put(propDesc.getDisplayName(), text);
+		    	    
+		    	    
+		    	    System.out.println(propDesc.getDisplayName());
 	    		}
 	    		else
 	    		{
@@ -211,12 +219,12 @@ public class ClassInputDialog extends Dialog{
 		      }});
 
 	    Button cancel = new Button(shell, SWT.PUSH);
-	    cancel.setText("Cancel");
+	    cancel.setText("Deafult Options");
 	    GridData dataCancel = new GridData(GridData.FILL_HORIZONTAL);
 	    cancel.setLayoutData(dataCancel);
 	    cancel.addSelectionListener(new SelectionAdapter() {
 	      public void widgetSelected(SelectionEvent event) {
-	        input = null;
+	        input = new MazeProperties();
 	        shell.close();
 	      }
 	   });

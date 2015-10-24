@@ -125,7 +125,7 @@ public class MazeWindow extends BasicWindow implements View{
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				String [] args= {"display","adi"};
+				String [] args= {"display",input.getMazeName()};
 				Command command = commands.get("display");
 				command.setArguments(args);
 				setUserCommand(command);
@@ -141,20 +141,34 @@ public class MazeWindow extends BasicWindow implements View{
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(boolGenerate==false){
-					input = new MazeProperties("adi",20,2,20);
-
+				
+				ClassInputDialog dlg = new ClassInputDialog(shell,MazeProperties.class);
+				MazeProperties tempInput=(MazeProperties)dlg.open();
+				if(boolGenerate==false && tempInput!=null){
+					//input = new MazeProperties("adi",20,2,20);
+					input=tempInput;
 					boolDisplay = true;
 					boolGenerate= true;
 
 					String x = "" + input.getRows();
-					String y = "" +input.getFloors(); 
-					String z = "" + input.getColumns(); 
-
+					String y = "" + input.getFloors(); 
+					String z = "" + input.getColumns();
+					
 					String [] args= {"generate", "maze", "3d",input.getMazeName(), x, y, z}; 
 					Command command = commands.get("generate");
 					command.setArguments(args);
-					setUserCommand(command);}			
+					setUserCommand(command);
+					} 
+				else{
+					input = new MazeProperties();
+					String x = "" + input.getRows();
+					String y = "" + input.getFloors(); 
+					String z = "" + input.getColumns();
+					String [] args= {"generate", "maze", "3d",input.getMazeName(), x, y, z}; 
+					Command command = commands.get("generate");
+					command.setArguments(args);
+					setUserCommand(command);
+				}				
 			}
 
 		});
