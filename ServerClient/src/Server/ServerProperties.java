@@ -35,7 +35,7 @@ public class ServerProperties{
 	/**
 	 * Instantiates a new server properties.
 	 */
-	private ServerProperties() {
+	public ServerProperties() {
 		this.properties=readProperties();
 		properties.setPort(7070);//Port=6767;
 		properties.setNumOfClients(10);//numOfClients=10;

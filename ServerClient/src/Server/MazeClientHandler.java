@@ -21,7 +21,7 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 
 /**
- * The Class MazeClientHandler. Define implementation of client handler.
+ * The Class MazeClientHandler. Define implementation ofclient handler.
  */
 
 public class MazeClientHandler extends Observable implements ClientHandler,Observer  { 

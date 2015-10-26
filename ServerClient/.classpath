@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/guava-10.0.jar" sourcepath="/Mvp/guava-10.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
