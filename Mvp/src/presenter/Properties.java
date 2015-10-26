@@ -4,6 +4,7 @@ import generic.Enums;
 
 import java.io.Serializable;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Properties.
  * This class contains all the properties one should desire to choose.
@@ -22,7 +23,9 @@ private static final long serialVersionUID = 1L;
 	public enum MazeGenerator{
 		
 		
-		DFS,RANDOM
+		/** The dfs. */
+		DFS,/** The random. */
+RANDOM
 	}
 
 	/**
@@ -31,7 +34,9 @@ private static final long serialVersionUID = 1L;
 	public enum UI{
 		
 	
-		CLI,GUI
+		/** The cli. */
+		CLI,/** The gui. */
+GUI
 	}
 
 	/**
@@ -40,7 +45,10 @@ private static final long serialVersionUID = 1L;
 	public enum MazeSolver{
 		
 		
-		MANHATTAN_ASTAR,EUCLIDIAN_ASTAR,BFS
+		/** The manhattan astar. */
+		ManhattanASTAR,/** The euclidian astar. */
+		EuclidianASTAR,/** The bfs. */
+BFS
 	}
 
 	/** The pool size. */
@@ -61,8 +69,8 @@ private static final long serialVersionUID = 1L;
 	/** The solver. */
 	public MazeSolver solver;
 	
-	
 
+	
 	/**
 	 * Instantiates a new properties.
 	 */
@@ -72,6 +80,8 @@ private static final long serialVersionUID = 1L;
 		this.ui = UI.GUI;
 		this.generator = MazeGenerator.DFS;
 		this.solver = MazeSolver.BFS;
+	/*	this.serverIP="10.0.0.2";
+		this.serverPort=7070;*/
 	}
 	
 	
@@ -95,7 +105,9 @@ private static final long serialVersionUID = 1L;
 		this.generator = generator;
 		this.ui = ui;
 		this.solver = solver;
+			
 	}
+
 
 
 
@@ -229,5 +241,7 @@ private static final long serialVersionUID = 1L;
 		return serialVersionUID;
 	
 }
+
+
 }
 

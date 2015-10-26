@@ -141,9 +141,9 @@ public class CLI implements Runnable {
 	}
 
 	/**
-	 * Sets the runing.
+	 * Sets the running.
 	 *
-	 * @param runing the new runing
+	 * @param runing the new running
 	 */
 	public void setRuning(boolean runing) {
 		this.runing = runing;
@@ -167,7 +167,7 @@ public class CLI implements Runnable {
 		System.out.println("command 6: load maze <file name> <name> ----------------------- load the requested maze");
 		System.out.println("command 7: maze size <name> ----------------------------------- display the maze size in memory");
 		System.out.println("command 8: file size <name> ----------------------------------- display the maze size in file");
-		System.out.println("command 9: solve <name> <algorithm> --------------------------- solve the maze using BFS or ASTAR algorithm");
+		System.out.println("command 9: solve <name> <algorithm> --------------------------- solve the maze using BFS\\MANHATTANASTAR\\EUCLIDIANASTAR algorithm");
 		System.out.println("command 10: display solution <name> --------------------------- display the solution nodes");
 		System.out.println("command 11: exit ---------------------------------------------- exit the program without any open threads or files");
 		System.out.println();

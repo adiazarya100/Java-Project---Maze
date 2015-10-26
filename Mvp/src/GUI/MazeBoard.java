@@ -12,6 +12,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import presenter.Maze3dAdapter;
 import view.Adapter;
@@ -23,9 +24,7 @@ import algorithms.search.State;
 public class MazeBoard extends CommonBoard{
 
 
-	Image image = new Image(getDisplay(), "./resources/images/mario.jpg");
-	Image image2 = new Image(getDisplay(), "./resources/images/jazz.gif");
-	Image image3 = new Image(getDisplay(), "./resources/images/mushroom.png");
+
 	
 	ImageData[] images;
 
@@ -37,10 +36,17 @@ public class MazeBoard extends CommonBoard{
 	int[][] tmpData2=null;
 	
 	Position position;
+	
 	boolean won=false;
-
+	
+	boolean flag = true;
 	public int exitX=0;
 	public int exitY=2;
+	
+	
+	Image image = new Image(getDisplay(), "./resources/images/Mario.png");
+	Image image2 = new Image(getDisplay(), "./resources/images/win.png");
+	Image image3 = new Image(getDisplay(), "./resources/images/mushroom.png");
 
 	public MazeBoard(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);		
@@ -51,11 +57,11 @@ public class MazeBoard extends CommonBoard{
 		return currentFloorY;
 	}
 
+	
 	@Override
 	public void drawBoard(PaintEvent e) { //this draw the maze!
 		e.gc.setForeground(new Color(null,0,0,0));
 		e.gc.setBackground(new Color(null,0,0,0));
-
 		int width=getSize().x;
 		int height=getSize().y;
 
@@ -96,10 +102,12 @@ public class MazeBoard extends CommonBoard{
 				}
 			}
 		}
-		if(characterX==tmp.getData().getGoalPosition().getX() && currentFloorY==tmp.getData().getGoalPosition().getY() && characterZ==tmp.getData().getGoalPosition().getZ()){
-			e.gc.drawImage(image2,0,0);
+		if(characterZ==tmp.getData().getGoalPosition().getX()+1 && currentFloorY==tmp.getData().getGoalPosition().getY() && characterX==tmp.getData().getGoalPosition().getZ()){
+			if(flag==true){
+			e.gc.drawImage(resize(image2, getSize().x, getSize().y),0,0);
+			}
+			flag =false;
 	   }
-		
 	}
 
 	
@@ -369,6 +377,19 @@ public class MazeBoard extends CommonBoard{
 		else {
 			System.out.print("false");
 			return false;}
+	}
+	
+	private Image resize(Image image, int width, int height) {
+		Image scaled = new Image(Display.getDefault(), width, height);
+		GC gc = new GC(scaled);
+		gc.setAntialias(SWT.ON);
+		gc.setInterpolation(SWT.HIGH);
+		gc.drawImage(image, 0, 0, 
+		image.getBounds().width, image.getBounds().height, 
+		0, 0, width, height);
+		gc.dispose();
+		image.dispose(); // don't forget about me!
+		return scaled;
 	}
 
 

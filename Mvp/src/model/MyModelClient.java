@@ -462,6 +462,8 @@ public class MyModelClient extends Observable implements Model{
 	
 	private Object queryServer(String serverIP,int serverPort,String command,Maze3d data,String generator)
 	{
+		System.out.println(serverIP);
+		System.out.println(serverPort);
 		Object result=null;
 		Socket server;			
 		try {

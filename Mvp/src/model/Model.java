@@ -46,7 +46,7 @@ public interface Model{
 	 * @param fileName the file name
 	 * @param name the name
 	 */
-	public void loadModel(String fileName, String name);
+	public Maze3d loadModel(String fileName, String name);
 
 	
 	/**

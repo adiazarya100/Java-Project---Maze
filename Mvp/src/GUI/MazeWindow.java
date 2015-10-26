@@ -791,7 +791,7 @@ public class MazeWindow extends BasicWindow implements View{
 		Solution=Solution.replace("(", "");
 		Solution=Solution.replace(")", "");
 		String []path = Solution.split(" ");
-		
+		//s.toString();
 		int[]tmpArray =new int[(path.length)*3];
 		String[] tmp = null;
 		//System.out.println(path.length-1);
@@ -801,7 +801,9 @@ public class MazeWindow extends BasicWindow implements View{
 		  xz = Integer.parseInt(tmp[0]);
 		  xt = Integer.parseInt(tmp[1]);
 		  yt = Integer.parseInt(tmp[2]);
-		  
+		  System.out.println(xz);
+		  System.out.println(xt);
+		  System.out.println(yt);
 		  tmpArray[index] = xz;
 		  tmpArray[index+1] = xt;
 		  tmpArray[index+2] = yt;

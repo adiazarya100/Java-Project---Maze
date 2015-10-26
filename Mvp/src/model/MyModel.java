@@ -84,7 +84,7 @@ public class MyModel extends Observable implements Model{
 	/** The my xml encoder. */
 	XMLEncoder myXMLEncoder;
 	
-	protected boolean loaded;
+	protected boolean flag;
 	
 	/**
 	 * Instantiates a new my model.
@@ -265,9 +265,10 @@ public class MyModel extends Observable implements Model{
 	 * load compressed maze
 	 */
 	@Override
-	public void loadModel(String fileName, String name) {
+	public Maze3d loadModel(String fileName, String name) {
 		
-		loaded=true;
+		Maze3d loaded=null;
+		flag=true;
 		try {
 			InputStream in = new MyDecompressorInputStream(new FileInputStream(fileName));
 			byte b[] = new byte[HashFileSize.get(fileName)];
@@ -284,7 +285,7 @@ public class MyModel extends Observable implements Model{
 				e.printStackTrace();
 			}
 			
-			Maze3d loaded = new Maze3d(b);
+			loaded = new Maze3d(b);
 			HM.put(name, loaded);
 			solutionHM.put(name, mazeToSolution.get(loaded));
 /*			System.out.println("blabla1");
@@ -300,6 +301,7 @@ public class MyModel extends Observable implements Model{
 			setChanged();
 			notifyObservers(Enums.FILE_NOT_FOUND);
 		}	
+		return loaded;
 	}
 
 
@@ -349,7 +351,7 @@ public class MyModel extends Observable implements Model{
 					}
 					else{
 						Maze3d maze = new SimpleMaze3dGenerator().generate(x, y, z); //has changed to simple.
-						//maze.print(); //just to print the maze to the log for testing.
+						maze.print(); //just to print the maze to the log for testing.
 						return maze;
 					}
 				}
@@ -373,6 +375,7 @@ public class MyModel extends Observable implements Model{
 				}
 				@Override
 				public void onSuccess(Maze3d maze) {
+					
 					HM.put(name, maze);
 					constantArgs[0] = Enums.MODEL_GENERATED; 
 					constantArgs[1] = name;
@@ -577,9 +580,9 @@ public class MyModel extends Observable implements Model{
 	 */
 	@Override
 	public Solution<Position> getSolution(String name) {
-		if(loaded==true){
+		if(flag==true){
 			this.ModelSolveing(name, "");
-			loaded=false;
+			flag=false;
 		}
 		
 		if(solutionHM.get(name) != null){

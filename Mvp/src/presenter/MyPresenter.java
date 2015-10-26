@@ -172,6 +172,7 @@ public class MyPresenter implements Presenter {
 			//call the generate method & IsNumeric check if the args are integers.
 			if(args.length==7 && (isNumeric(args[4])==true) && (isNumeric(args[5])==true) && (isNumeric(args[6])==true)){
 				if(!model.getHM().containsKey(args[3])){
+					
 				model.generateModel(args[3] , Integer.parseInt(args[4]),Integer.parseInt(args[5]),Integer.parseInt(args[6]));
 				}
 				else
@@ -551,6 +552,7 @@ public class MyPresenter implements Presenter {
 				break;
 
 			case Enums.MODEL_GENERATED: 
+				
 				searchMaze3DAdapter maze = new searchMaze3DAdapter(model.getHM().get(args[1]));
 				Maze3dAdapter mazeDrew = new Maze3dAdapter(maze.getSearchableMaze());
 				//view.displayModel(mazeDrew);//פה אתה מדפיס אותו.....!!! פה אתה אומר למעשה לך לVIEW ותדפיס משם וה 
