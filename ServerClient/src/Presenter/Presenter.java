@@ -31,8 +31,6 @@ public class Presenter implements Observer {
 		this.MyModelServer=model;
 		this.myView=view;
 		ConcurrentHashMap<String, RemoteControlCommand> commandMap=new ConcurrentHashMap<String, RemoteControlCommand>(); 
-		commandMap.put("connection", new CheckConnectionStatus());
-		commandMap.put("disconnect", new DisconnectUser());
 		commandMap.put("start",new StartServer());
 		commandMap.put("stop", new StopServer());
 		commandMap.put("exit", new exit());
@@ -43,63 +41,6 @@ public class Presenter implements Observer {
 	
 	
 
-	/**
-	 * The Class CheckConnectionStatus.
-	 */
-	public class CheckConnectionStatus implements RemoteControlCommand {
-
-		/** The params. */
-		String[] params;
-
-		/* (non-Javadoc)
-		 * @see presenter.RemoteControlCommand#doCommand()
-		 */
-		@Override
-		public void doCommand() {
-			String client = params[1];
-			MyModelServer.getStatusClient(client);
-
-		}
-
-		/* (non-Javadoc)
-		 * @see presenter.RemoteControlCommand#setArguments(java.lang.String)
-		 */
-		@Override
-		public void setArguments(String[] args) {
-			this.params = args;
-
-		}
-
-	}
-
-	/**
-	 * The Class DisconnectUser.
-	 */
-	public class DisconnectUser implements RemoteControlCommand{
-
-		/** The params. */
-		String[] params;
-
-		/* (non-Javadoc)
-		 * @see presenter.RemoteControlCommand#doCommand()
-		 */
-		@Override
-		public void doCommand() {
-			String client = params[1];
-			MyModelServer.DisconnectClient(client);
-
-		}
-
-		/* (non-Javadoc)
-		 * @see presenter.RemoteControlCommand#setArguments(java.lang.String)
-		 */
-		@Override
-		public void setArguments(String[] args) {
-			this.params = args;
-
-		}
-
-	}
 
 	/**
 	 * The Class StartServer.
@@ -206,13 +147,6 @@ public class Presenter implements Observer {
 			if(args != null){
 				switch(args[0]){
 
-				case Enums.CANNOT_REMOVE_CLIENT:
-
-					if(args[1] == null)
-						myView.Display(args[0]);
-					else
-						myView.Display(args[1]);
-					break;
 
 				case Enums.CANNOT_START_SERVER:
 
@@ -241,31 +175,7 @@ public class Presenter implements Observer {
 
 					myView.Display(args[0]);
 					break;
-				case Enums.CLIENT_STATUS:
 
-			/*		if(args[1] != null)
-						myView.DisplayStatus(args[0]+ " " + args[1]);
-					else*/
-						myView.Display(args[0]);
-					break;
-
-				case Enums.CLIENT_ADDED:
-/*
-					myView.addClient(args[1]); */
-					break;
-
-				case Enums.CLIENT_REMOVED:
-
-					/*myView.removeClient(args[1]);*/
-					break;
-
-		/*		case Enums.CLIENT_UPDATE:
-					if(args[1] == null)
-						myView.DisplayStatus(args[0]);
-					else
-						myView.DisplayStatus(args[0] + "\n" + args[1]);
-
-					break;*/
 				case Enums.MODEL_ERROR:
 					if(args[0] != null)
 						myView.Display(args[0]);

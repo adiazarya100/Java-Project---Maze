@@ -26,21 +26,37 @@ import algorithms.search.Solution;
 
 public class MazeClientHandler extends Observable implements ClientHandler,Observer  { 
 
-	protected HashMap<Maze3d, Solution<Position>> mazeToSolution; //for every maze save his solution.
+	/** The maze to solution
+	 * for every maze save his solution. */
+	protected HashMap<Maze3d, Solution<Position>> mazeToSolution; 
+	
+	/** The executor. */
 	private ListeningExecutorService executor; //Manage the thread pool.
 
+	/** The active clients. */
 	volatile ConcurrentHashMap<String,Socket> activeClients=new ConcurrentHashMap<String,Socket>();
+	
+	/** The messages. */
 	volatile ConcurrentLinkedQueue<String> messages=new ConcurrentLinkedQueue<String>();
 	
+	/** The My model server. */
 	MyModelServer MyModelServer;
+	
+	/** The client solution. */
 	Solution<Position> clientSolution;
 
+	/**
+	 * Instantiates a new maze client handler.
+	 */
 	public MazeClientHandler() {
 		this.MyModelServer= new MyModelServer(this);
 	}
 
 
 
+	/* (non-Javadoc)
+	 * @see Server.ClientHandler#handleClient(java.net.Socket)
+	 */
 	@Override
 	public void handleClient(Socket client) throws IOException, ClassNotFoundException {
 
@@ -116,6 +132,9 @@ public class MazeClientHandler extends Observable implements ClientHandler,Obser
 
 
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub

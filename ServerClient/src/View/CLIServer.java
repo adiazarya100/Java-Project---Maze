@@ -164,7 +164,6 @@ public class CLIServer implements Runnable {
 			System.out.println();
 			System.out.println("command 1: start server ----------------- start the server");
 			System.out.println("command 2: stop server ------------------ stop the server");
-			System.out.println("command 3: display message -------------- display messages");
 			System.out.println("command 3: exit ------------------------- exit");
 			System.out.println();
 		}

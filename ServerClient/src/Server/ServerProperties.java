@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The server property.
  */

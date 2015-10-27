@@ -4,6 +4,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import Presenter.RemoteControlCommand;
 
+/**
+ * The Interface View.
+ */
 public interface View {
 
 
@@ -36,40 +39,16 @@ public interface View {
 		 */
 		public void setUserCommand(RemoteControlCommand userCommand);
 
+		/**
+		 * Exit.
+		 */
 		void exit();
 
+		/**
+		 * Start.
+		 */
 		void start();
 		
 
-/*		*//**
-		 * Save data.
-		 *
-		 * @param data the data
-		 *//*
-		public void saveData(String data);
 
-		*//**
-		 * Adds the client.
-		 *
-		 * @param Client the client
-		 *//*
-		public void addClient(String Client);
-
-		*//**
-		 * Removes the client.
-		 *
-		 * @param Client the client
-		 *//*
-		public void removeClient(String Client);
-*/
-
-
-/*		*//**
-		 * Display status.
-		 *
-		 * @param msg the msg
-		 *//*
-		void DisplayStatus(String msg);
-*/
-		
 }

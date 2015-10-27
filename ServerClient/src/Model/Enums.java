@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * The Class Enums.
+ */
 public class Enums {
 
 	/** The Constant CANNOT_REMOVE_CLIENT. */
