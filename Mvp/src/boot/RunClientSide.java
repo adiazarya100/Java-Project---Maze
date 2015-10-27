@@ -1,5 +1,7 @@
 package boot;
-
+/** * @authors  Zlil Korman 302751839 & adi azarya 200540789
+* @version 1.0
+* @since   2015-10-27*/ 
 import generic.Enums;
 import generic.WritePropertiesGUI;
 
@@ -25,7 +27,7 @@ import presenter.Properties;
 import view.MyView;
 import view.View;
 
-public class Run3 {
+public class RunClientSide {
 
 	public static void main(String[] args) {
 		
