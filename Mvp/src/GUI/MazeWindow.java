@@ -37,40 +37,77 @@ import algorithms.search.Solution;
 import view.Adapter;
 import view.View;
 
+
+/**
+ * The Class MazeWindow.
+ */
 public class MazeWindow extends BasicWindow implements View{
 
+	/** The timer. */
 	Timer timer;
+	
+	/** The task. */
 	TimerTask task;
 
+	/** The commands. */
 	protected HashMap<String, Command>  commands;
 
+	/** The Last user command. */
 	protected Command LastUserCommand =null;
 
+	/** The prop. */
 	Properties prop;
 
+	/** The maze name. */
 	String mazeName=null;
 
+	/** The input. */
 	MazeProperties input=null;
 	
+	/** The data recieved. */
 	Maze3d dataRecieved=null; 
 
+	/** The board widget. */
 	CommonBoard boardWidget;
 	
+	/** The maze board. */
 	MazeBoard mazeBoard;
 	
+	/** The bool display. */
 	boolean boolDisplay=false;
+	
+	/** The bool generate. */
 	boolean boolGenerate=false;
 
 	
+	/**
+	 * Instantiates a new maze window.
+	 *
+	 * @param display the display
+	 * @param shell the shell
+	 * @param title the title
+	 * @param width the width
+	 * @param height the height
+	 */
 	public MazeWindow(Display display,Shell shell,String title, int width, int height) {
 		super(display,shell,title,width,height);
 	}
 
+	/**
+	 * Instantiates a new maze window.
+	 *
+	 * @param title the title
+	 * @param width the width
+	 * @param height the height
+	 */
 	public MazeWindow(String title, int width, int height) {
 		super(title, width, height);
 	}
 
 
+	/* (non-Javadoc)
+	 * @see GUI.BasicWindow#initWidgets()
+	 */
 	@Override
 	void initWidgets() {
 
@@ -758,12 +795,18 @@ public class MazeWindow extends BasicWindow implements View{
 	//-------------------------view methods--------------------------------//
 
 
-	@Override
+	/* (non-Javadoc)
+ * @see view.View#dirCommand(java.lang.String)
+ */
+@Override
 	public void dirCommand(String fileName) {
 		// not relevant for this view
 
 	}
 
+	/* (non-Javadoc)
+	 * @see view.View#displayModel(view.Adapter)
+	 */
 	@Override
 	public <T> void displayModel(Adapter<T> adapter) {
 		if(boolDisplay==true){
@@ -777,9 +820,15 @@ public class MazeWindow extends BasicWindow implements View{
 		//boardWidget.displayProblem(adapter);
 	}
 
+	/* (non-Javadoc)
+	 * @see view.View#displayCrossSectionBy(view.Adapter)
+	 */
 	@Override
 	public <T> void displayCrossSectionBy(Adapter<T> draw) {}
 
+	/* (non-Javadoc)
+	 * @see view.View#displaySolution(algorithms.search.Solution)
+	 */
 	@Override
 	public <T> void displaySolution(Solution<T> s) {
 		//mazeBoard.displaySolution(s);
@@ -814,10 +863,16 @@ public class MazeWindow extends BasicWindow implements View{
 		mazeBoard.won =true;
 	}
 
+	/* (non-Javadoc)
+	 * @see view.View#setCommands(java.util.HashMap)
+	 */
 	@Override
 	public void setCommands(HashMap<String, Command> commands) {
 		this.commands=commands;}
 
+	/* (non-Javadoc)
+	 * @see view.View#displayString(java.lang.String)
+	 */
 	@Override
 	public void displayString(String toPrint) {
 		if(toPrint!=null){
@@ -830,11 +885,18 @@ public class MazeWindow extends BasicWindow implements View{
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see view.View#getUserCommand()
+	 */
 	@Override
 	public Command getUserCommand() {
 
 		return LastUserCommand;
 	}
+	
+	/* (non-Javadoc)
+	 * @see view.View#setUserCommand(presenter.Command)
+	 */
 	@Override
 	public void setUserCommand(Command command) {
 		LastUserCommand= command;
@@ -843,6 +905,9 @@ public class MazeWindow extends BasicWindow implements View{
 
 	}
 
+	/* (non-Javadoc)
+	 * @see view.View#exit()
+	 */
 	@Override
 	public void exit() {
 		if(mazeBoard!=null){
@@ -853,13 +918,27 @@ public class MazeWindow extends BasicWindow implements View{
 			this.shell.dispose();
 	}
 
+	/**
+	 * Gets the properties.
+	 *
+	 * @return the properties
+	 */
 	public Properties getProperties() {
 		return prop;
 	}
 
+	/**
+	 * Sets the properties.
+	 *
+	 * @param prop the new properties
+	 */
 	public void setProperties(Properties prop) {
 		this.prop = prop;
 	}
+	
+	/* (non-Javadoc)
+	 * @see view.View#start()
+	 */
 	@Override
 	public void start() {
 		this.run();
@@ -869,6 +948,11 @@ public class MazeWindow extends BasicWindow implements View{
 
 
 
+	/**
+	 * Sets the properties.
+	 *
+	 * @param filename the new properties
+	 */
 	protected void setProperties(String filename) {
 
 		FileInputStream in;

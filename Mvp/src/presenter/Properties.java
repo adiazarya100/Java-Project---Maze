@@ -4,7 +4,7 @@ import generic.Enums;
 
 import java.io.Serializable;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class Properties.
  * This class contains all the properties one should desire to choose.

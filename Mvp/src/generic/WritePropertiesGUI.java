@@ -9,8 +9,17 @@ import org.eclipse.swt.widgets.Shell;
 import GUI.ClassInputDialog;
 import presenter.Properties;
 
+/**
+ * The Class WritePropertiesGUI.
+ */
 public class WritePropertiesGUI {
 
+	/**
+	 * Write properties.
+	 *
+	 * @param shell the shell
+	 * @return the int
+	 */
 	public int writeProperties(Shell shell)
 	{
 		XMLEncoder e;

@@ -16,24 +16,42 @@ import view.Adapter;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Solution;
 
+
+/**
+ * The Class CommonBoard.
+ */
 public abstract class CommonBoard extends Composite implements Board {
 
+	/** The board rows. */
 	int boardRows; 
 
+	/** The board cols. */
 	int boardCols;
 
+	/** The tmp. */
 	Adapter<Maze3d> tmp;
 
+	/** The my maze. */
 	Maze3dAdapter myMaze;
 
+	/** The maze data. */
 	int[][] mazeData;
 	
+	/** The current floor y. */
 	int currentFloorY;
 
+	/** The character x. */
 	public int characterX;
 	
+	/** The character z. */
 	public int characterZ;
 	
+		/**
+		 * Instantiates a new common board.
+		 *
+		 * @param parent the parent
+		 * @param style the style
+		 */
 		public CommonBoard(Composite parent, int style) {
 			super(parent, style);
 				addPaintListener(new PaintListener() { 
@@ -100,19 +118,40 @@ public abstract class CommonBoard extends Composite implements Board {
 	public abstract void destructBoard();*/
 		
 		
-	@Override
+	/* (non-Javadoc)
+ * @see GUI.Board#displaySolution(algorithms.search.Solution)
+ */
+@Override
 	public abstract <T> void displaySolution(Solution<T> s);
 	
+	/* (non-Javadoc)
+	 * @see GUI.Board#hasPathUp(int, int, int)
+	 */
 	public abstract boolean hasPathUp(int characterRow, int characterFloor ,int characterCol);
 	
+	/* (non-Javadoc)
+	 * @see GUI.Board#hasPathRight(int, int, int)
+	 */
 	public abstract boolean hasPathRight(int characterRow, int characterFloor ,int characterCol);
 	
+	/* (non-Javadoc)
+	 * @see GUI.Board#hasPathDown(int, int, int)
+	 */
 	public abstract boolean hasPathDown(int characterRow, int characterFloor ,int characterCol);
 	
+	/* (non-Javadoc)
+	 * @see GUI.Board#hasPathLeft(int, int, int)
+	 */
 	public abstract boolean hasPathLeft(int characterRow, int characterFloor ,int characterCol);
 	 
+	/* (non-Javadoc)
+	 * @see GUI.Board#hasPathFloorUp(int, int, int)
+	 */
 	public abstract boolean hasPathFloorUp(int characterRow, int characterFloor ,int characterCol);
 	 
+	/* (non-Javadoc)
+	 * @see GUI.Board#hasPathFloorDown(int, int, int)
+	 */
 	public abstract boolean hasPathFloorDown(int characterRow, int characterFloor ,int characterCol);
 
 }

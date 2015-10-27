@@ -1,6 +1,6 @@
 package GUI;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class MazeProperties.
  */

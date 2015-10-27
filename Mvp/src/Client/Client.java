@@ -20,7 +20,9 @@ import generic.Enums;
 import generic.ServerEnums;
 import model.Model;
 
-
+/**
+ * The Class Client.
+ */
 public class Client extends Observable implements Model {
 
 	/** The my maze. */
@@ -38,7 +40,7 @@ public class Client extends Observable implements Model {
 	/**
 	 * Instantiates a new client model.
 	 *
-	 * @param preferences the preferences
+	 * @param properties the properties
 	 */
 	public Client(Properties properties) {
 
@@ -276,6 +278,9 @@ public class Client extends Observable implements Model {
 
 
 
+	/* (non-Javadoc)
+	 * @see model.Model#getHM()
+	 */
 	@Override
 	public HashMap<String, Maze3d> getHM() {
 		// TODO Auto-generated method stub
@@ -284,6 +289,9 @@ public class Client extends Observable implements Model {
 
 
 
+	/* (non-Javadoc)
+	 * @see model.Model#exit()
+	 */
 	@Override
 	public void exit() {
 		// TODO Auto-generated method stub

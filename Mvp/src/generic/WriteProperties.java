@@ -7,8 +7,16 @@ import java.util.prefs.Preferences;
 
 import presenter.Properties;
 
+/**
+ * The Class WriteProperties.
+ */
 public class WriteProperties {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		XMLEncoder e;

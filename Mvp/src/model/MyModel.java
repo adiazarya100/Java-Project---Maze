@@ -44,7 +44,6 @@ import algorithms.search.Searchable;
 import algorithms.search.Searcher;
 import algorithms.search.Solution;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MyModel.
  */
@@ -57,17 +56,20 @@ public class MyModel extends Observable implements Model{
 	/** The compressed hm. */
 	protected HashMap<String, String> compressedHM;
 	
-	/** The solution hm. */
-	protected HashMap<String, Solution<Position>> solutionHM;   // for every NAME maze save his solution.
+	/** The solution hm.
+	 *for every NAME maze save his solution. */
+	protected HashMap<String, Solution<Position>> solutionHM;   
 	
-	/** The maze to solution. */
-	protected HashMap<Maze3d, Solution<Position>> mazeToSolution; //for every maze save his solution.
+	/** The maze to solution.
+	 * for every maze save his solution. */
+	protected HashMap<Maze3d, Solution<Position>> mazeToSolution; 
 	
 	/** The Hash file size. */
 	protected HashMap<String, Integer> HashFileSize;
 	
-	/** The executor. */
-	private ListeningExecutorService executor; //Manage the thread pool.
+	/** The executor. 
+	 * Manage the thread pool.*/
+	private ListeningExecutorService executor; 
 	
 	/** The properties. */
 	private Properties properties;

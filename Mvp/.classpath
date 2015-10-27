@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/commons-beanutils-1.9.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/myAlgorithmsJarForMatala5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/git/Mvp/myAlgorithmsJarForMatala5.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

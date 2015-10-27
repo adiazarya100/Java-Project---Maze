@@ -21,43 +21,79 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import algorithms.search.State;
 
+/**
+ * The Class MazeBoard.
+ * definition of maze data to draw it in the window.
+ */
 public class MazeBoard extends CommonBoard{
 
 
 
 	
+	/** The images. */
 	ImageData[] images;
 
+	/** The hints. */
 	boolean[][][] hints;
 	
+	/** The solution. */
 	int solution[] =null;
 	
+	/** The tmp data. */
 	int[][] tmpData=null;
+	
+	/** The tmp data2. */
 	int[][] tmpData2=null;
 	
+	/** The position. */
 	Position position;
 	
+	/** The won. */
 	boolean won=false;
 	
+	/** The flag. */
 	boolean flag = true;
+	
+	/** The exit x. */
 	public int exitX=0;
+	
+	/** The exit y. */
 	public int exitY=2;
 	
 	
+	/** The image. */
 	Image image = new Image(getDisplay(), "./resources/images/Mario.png");
+	
+	/** The image2. */
 	Image image2 = new Image(getDisplay(), "./resources/images/win.png");
+	
+	/** The image3. */
 	Image image3 = new Image(getDisplay(), "./resources/images/mushroom.png");
 
+	/**
+	 * Instantiates a new maze board.
+	 *
+	 * @param parent the parent
+	 * @param style the style
+	 */
 	public MazeBoard(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);		
 			
 	}
 	
+	/**
+	 * Gets the current floor.
+	 *
+	 * @return the current floor
+	 */
 	public int getCurrentFloor() {
 		return currentFloorY;
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see GUI.Board#drawBoard(org.eclipse.swt.events.PaintEvent)
+	 */
 	@Override
 	public void drawBoard(PaintEvent e) { //this draw the maze!
 		e.gc.setForeground(new Color(null,0,0,0));
@@ -112,6 +148,13 @@ public class MazeBoard extends CommonBoard{
 
 	
 	
+	/**
+	 * Paint cube.
+	 *
+	 * @param p the p
+	 * @param h the h
+	 * @param e the e
+	 */
 	private void paintCube(double[] p,double h,PaintEvent e){ //this draw the maze!
         int[] f=new int[p.length];
         for(int k=0;k<f.length;f[k]=(int)Math.round(p[k]),k++);
@@ -131,10 +174,22 @@ public class MazeBoard extends CommonBoard{
 		
 	}
 	
+	/**
+	 * Paint solution.
+	 *
+	 * @param p the p
+	 * @param h the h
+	 * @param e the e
+	 */
 	private void PaintSolution(double[] p,double h,PaintEvent e){ //this draw the Solution!
 		e.gc.drawImage(image3, 0, 0, image3.getBounds().width,image3.getBounds().height,(int)Math.round(p[0]), (int)Math.round(p[1]-h/2), (int)Math.round((50)/2), (int)Math.round(h));
 	}
 	
+	/**
+	 * Sets the board data.
+	 *
+	 * @param adapter the adapter
+	 */
 	//set data Maze3DAdapter maze
 	void SetBoardData(Adapter<Maze3d> adapter) {
 		
@@ -153,6 +208,11 @@ public class MazeBoard extends CommonBoard{
 	}
 
 
+	/**
+	 * Sets the maze win.
+	 *
+	 * @param solution the solution
+	 */
 	void SetMazeWIN(int[] solution) {
 		int[][][] tmpMaze = this.tmp.getData().getMaze();
 		
@@ -163,6 +223,9 @@ public class MazeBoard extends CommonBoard{
 		this.mazeData= tmp.getData().getCrossSectionByY(getFloor());
 		}
 	
+	/* (non-Javadoc)
+	 * @see GUI.CommonBoard#displaySolution(algorithms.search.Solution)
+	 */
 	@Override
 	public <T> void displaySolution(Solution<T> s) {
 		
@@ -171,20 +234,41 @@ public class MazeBoard extends CommonBoard{
 	
 }
 	
+	/**
+	 * Sets the solution array.
+	 *
+	 * @param array the new solution array
+	 */
 	void setSolutionArray(int[] array){
     	  this.solution = array; 
  }
 
+	/**
+	 * Gets the floor.
+	 *
+	 * @return the floor
+	 */
 	public int getFloor() {
 		return currentFloorY;
 	}
 
+	/**
+	 * Sets the floor.
+	 *
+	 * @param floor the new floor
+	 */
 	public void setFloor(int floor) {
 		this.currentFloorY = floor;
 		
 	}
 
 	
+	/**
+	 * Move character.
+	 *
+	 * @param x the x
+	 * @param z the z
+	 */
 	private void moveCharacter(int x,int z){
 		if(x>=0 && x<mazeData[0].length && z>=0 && z<mazeData.length && mazeData[z][x]!=1){
 			characterX=x;
@@ -199,6 +283,9 @@ public class MazeBoard extends CommonBoard{
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see GUI.Board#moveUp()
+	 */
 	@Override
 	public void moveUp() {
 		int x=characterX;
@@ -253,6 +340,9 @@ public class MazeBoard extends CommonBoard{
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see GUI.Board#moveFloorUp()
+	 */
 	@Override
 	public void moveFloorUp() {
 		if((currentFloorY+1>=0) && (currentFloorY+1 <= (tmp.getData().getY()-1))){
@@ -278,6 +368,9 @@ public class MazeBoard extends CommonBoard{
 		//moveCharacter(x,y,z);}//}
 	}
 
+	/* (non-Javadoc)
+	 * @see GUI.Board#moveFloorDown()
+	 */
 	@Override
 	public void moveFloorDown() {
 		if((currentFloorY-1>=0) && (currentFloorY-1 <= (tmp.getData().getY()-1))){
@@ -304,6 +397,9 @@ public class MazeBoard extends CommonBoard{
 		}
 	
 
+	/* (non-Javadoc)
+	 * @see GUI.Board#setCharacterPosition(int, int)
+	 */
 	@Override
 	public void setCharacterPosition(int row, int col) {
 		characterX=col;
@@ -313,6 +409,9 @@ public class MazeBoard extends CommonBoard{
 
 	
 	
+	/* (non-Javadoc)
+	 * @see GUI.CommonBoard#hasPathUp(int, int, int)
+	 */
 	@Override
 	public boolean hasPathUp(int characterRow, int characterFloor ,int characterCol) {
 		//tmp = this.myMaze.getData();
@@ -321,6 +420,9 @@ public class MazeBoard extends CommonBoard{
 		return value == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see GUI.CommonBoard#hasPathRight(int, int, int)
+	 */
 	@Override
 	public boolean hasPathRight(int characterRow, int characterFloor ,int characterCol) {
 		//Maze3d maze = this.myMaze.getData();
@@ -329,6 +431,9 @@ public class MazeBoard extends CommonBoard{
 		return value == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see GUI.CommonBoard#hasPathDown(int, int, int)
+	 */
 	@Override
 	public boolean hasPathDown(int characterRow, int characterFloor ,int characterCol){
 		//Maze3d maze = this.myMaze.getData();
@@ -337,6 +442,9 @@ public class MazeBoard extends CommonBoard{
 		return value == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see GUI.CommonBoard#hasPathLeft(int, int, int)
+	 */
 	@Override
 	public boolean hasPathLeft(int characterRow, int characterFloor ,int characterCol) {
 	//	Maze3d maze = this.myMaze.getData();
@@ -345,6 +453,9 @@ public class MazeBoard extends CommonBoard{
 		return value == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see GUI.CommonBoard#hasPathFloorUp(int, int, int)
+	 */
 	@Override
 	public boolean hasPathFloorUp(int characterRow, int characterFloor ,int characterCol) {
 		System.out.println("hasPathFloorUp");
@@ -361,6 +472,9 @@ public class MazeBoard extends CommonBoard{
 			return false;}
 	}
 
+	/* (non-Javadoc)
+	 * @see GUI.CommonBoard#hasPathFloorDown(int, int, int)
+	 */
 	@Override
 	public boolean hasPathFloorDown(int characterRow, int characterFloor ,int characterCol) {
 		//Maze3d maze = this.myMaze.getData();
@@ -379,6 +493,14 @@ public class MazeBoard extends CommonBoard{
 			return false;}
 	}
 	
+	/**
+	 * Resize.
+	 *
+	 * @param image the image
+	 * @param width the width
+	 * @param height the height
+	 * @return the image
+	 */
 	private Image resize(Image image, int width, int height) {
 		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);

@@ -27,6 +27,9 @@ import presenter.Properties;
 import view.MyView;
 import view.View;
 
+/**
+ * The Class RunClientSide.
+ */
 public class RunClientSide {
 
 	public static void main(String[] args) {
