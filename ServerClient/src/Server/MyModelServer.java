@@ -226,7 +226,7 @@ public class MyModelServer extends Observable implements Model,Runnable{
 		}
 
 		if(futureSolution!=null){
-
+			//futureSolution.get()
 			Futures.addCallback(futureSolution, new FutureCallback<Solution<Position>>() {
 
 				//@Override
@@ -243,16 +243,16 @@ public class MyModelServer extends Observable implements Model,Runnable{
 					try {
 						saveSolution();
 					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
+				
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+			
 						e.printStackTrace();
 					}
 					System.out.println("solution from hash map");
 					System.out.println(mazeToSolution.get(current));
 					
-					System.out.println("on sucsses111");
+					System.out.println("on sucsses");
 					System.out.println("on sucsses solution:");
 					System.out.println(sol);
 					
