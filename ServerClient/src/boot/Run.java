@@ -31,14 +31,9 @@ public class Run {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter out = new PrintWriter(System.out);
 		ServerProperties myProp = readProperties();
-		//--------כל מה שבירוק זה שינויים בשביל ה GUI, מה שהיה בהערה היה קודם--------//
-		//MyModel myModel = new MyModel(myProp); 
-		//MyView myView = new MyView(out, in); 
 		MazeClientHandler MCH = new MazeClientHandler();
 		Model model = new MyModelServer(MCH);
 		View view = new MyViewServer(out, in);
-		
-		//Presenter presenter = new MyPresenter(myView, myModel);
 		Presenter presenter = new Presenter(model, view);
 		//myView.addObserver(presenter);
 		//myModel.addObserver(presenter);
