@@ -12,7 +12,7 @@
    <string>serverIP</string>
    <void method="set">
     <object idref="Properties0"/>
-    <string>10.0.0.2</string>
+    <string>127.0.0.1</string>
    </void>
   </void>
   <void class="presenter.Properties" method="getField">
