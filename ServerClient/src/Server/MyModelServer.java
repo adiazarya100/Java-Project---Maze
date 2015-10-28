@@ -104,7 +104,6 @@ public class MyModelServer extends Observable implements Model,Runnable{
 
 		System.out.println("enter solve");
 		try {
-			//FileInputStream fis = new FileInputStream(Enums.FILE_PATH);
 			File f = new File("./Solutions.zip");
 			if(f.exists()){
 				System.out.println("file exists Solutions.zip");
@@ -135,106 +134,95 @@ public class MyModelServer extends Observable implements Model,Runnable{
 				temp = (Solution<Position>) pair.getValue();
 			if (temp!=null){
 				flag = true;
-				solutionToSend = temp;}
+				solutionToSend = temp;
+				System.out.println("solution from memory");}
 		}
-		if(flag == false ){
-			Future<Solution<Position>> future = executor.submit(new Callable<Solution<Position>>(){
-				@Override
-				public Solution<Position> call() throws Exception {
-					switch(algorithm.toLowerCase()){
-					case "bfs":
-						System.out.println("Attention: using bfs");
-						searchMaze3DAdapter bfsMaze = new searchMaze3DAdapter(current);
-						Searcher<Position> searcherBFS= new BFSalgorithm<Position>(); 
-						Solution<Position> s = new Solution<Position>();
-						s= searcherBFS.search(bfsMaze);
-						solutionToSend =s;
-						break;
-
-					case "manhattanastar":
-						System.out.println("Attention: using manhattan_astar");
-						searchMaze3DAdapter manhattanAstarMaze= new searchMaze3DAdapter(current);
-						Searcher<Position> searcherAStar= new ASTARalgorithm<Position>(new ManhattanDistance());
-						Solution<Position> s1 = new Solution<Position>();
-						s1= searcherAStar.search(manhattanAstarMaze);
-						solutionToSend =s1;
-						break;
-
-					case "euclidianastar":
-						System.out.println("Attention: using euclidian_astar");
-						searchMaze3DAdapter euclidianAstarMaze= new searchMaze3DAdapter(current);	
-						Searcher<Position> searcherAStar1= new ASTARalgorithm<Position>(new EuclideanDistance());
-						Solution<Position> s2 = new Solution<Position>();
-						s2= searcherAStar1.search(euclidianAstarMaze);
-						solutionToSend =s2;
-						break;
-					default:
-						System.out.println("Wrong Input");
-						break;
-					}
-					return solutionToSend;
-				}
-
-			});
-			executor.execute(new Runnable() {
-
-				@Override
-				public void run() {
-					Solution<Position> sol = null;
-					try {
-						sol = future.get();
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ExecutionException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					if(sol!=null){
-						try {
-							mazeToSolution.put(current,future.get());
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (ExecutionException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						try {
-							saveSolution();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						constantArgs[0] = Enums.MODEL_SOLVED;
-						setChanged();
-						notifyObservers(constantArgs);
-					}
-					else{
-						constantArgs[0] = Enums.MODEL_ERROR;
-						setChanged();
-						notifyObservers(constantArgs);
-					}
-					
-				}
 				
-			});
-			try {
-				return future.get();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(flag==false){
+		class solutionCallable implements Callable<Solution<Position>>{
+			private Maze3d mg;
+			private String algo;
+			
+			public solutionCallable(Maze3d maze, String algorithm){
+				mg = maze;
+				algo = algorithm;
 			}
+			
+			@Override
+			public Solution<Position> call() throws Exception {
+				switch(algorithm.toLowerCase()){
+				case "bfs":
+					System.out.println("Attention: using bfs");
+					searchMaze3DAdapter bfsMaze = new searchMaze3DAdapter(current);
+					Searcher<Position> searcherBFS= new BFSalgorithm<Position>(); 
+					Solution<Position> s = new Solution<Position>();
+					s= searcherBFS.search(bfsMaze);
+					solutionToSend =s;
+					break;
 
+				case "manhattanastar":
+					System.out.println("Attention: using manhattan_astar");
+					searchMaze3DAdapter manhattanAstarMaze= new searchMaze3DAdapter(current);
+					Searcher<Position> searcherAStar= new ASTARalgorithm<Position>(new ManhattanDistance());
+					Solution<Position> s1 = new Solution<Position>();
+					s1= searcherAStar.search(manhattanAstarMaze);
+					solutionToSend =s1;
+					break;
+
+				case "euclidianastar":
+					System.out.println("Attention: using euclidian_astar");
+					searchMaze3DAdapter euclidianAstarMaze= new searchMaze3DAdapter(current);	
+					Searcher<Position> searcherAStar1= new ASTARalgorithm<Position>(new EuclideanDistance());
+					Solution<Position> s2 = new Solution<Position>();
+					s2= searcherAStar1.search(euclidianAstarMaze);
+					solutionToSend =s2;
+					break;
+				default:
+					System.out.println("Wrong Input");
+					break;
+				}
+				return solutionToSend;
+			}
+			
 		}
+		
+		
+		
+		solutionCallable generator = new solutionCallable(current,algorithm);
+		Future <Solution<Position>> futureSolution = executor.submit(generator);
+		try {
+			mazeToSolution.put(current, futureSolution.get());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			saveSolution();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		constantArgs[0] = Enums.MODEL_SOLVED;
+		setChanged();
+		notifyObservers(constantArgs);
+		}
+		//if(solutionToSend!=null){
+		constantArgs[0] = Enums.MODEL_SOLVED;
+		setChanged();
+		notifyObservers(constantArgs);
+		//}
 		return solutionToSend;
-
-
 	}
 
+	
+	
+	
 	/** saveSolution method:
 	 * write the mazeToSulution hashMap that keeps every maze and his solution**/
 	public void saveSolution() throws FileNotFoundException, IOException{
@@ -320,3 +308,101 @@ public class MyModelServer extends Observable implements Model,Runnable{
 
 
 }
+
+
+
+
+/*if(flag == false ){
+Future<Solution<Position>> future = executor.submit(new Callable<Solution<Position>>(){
+	@Override
+	public Solution<Position> call() throws Exception {
+		switch(algorithm.toLowerCase()){
+		case "bfs":
+			System.out.println("Attention: using bfs");
+			searchMaze3DAdapter bfsMaze = new searchMaze3DAdapter(current);
+			Searcher<Position> searcherBFS= new BFSalgorithm<Position>(); 
+			Solution<Position> s = new Solution<Position>();
+			s= searcherBFS.search(bfsMaze);
+			solutionToSend =s;
+			break;
+
+		case "manhattanastar":
+			System.out.println("Attention: using manhattan_astar");
+			searchMaze3DAdapter manhattanAstarMaze= new searchMaze3DAdapter(current);
+			Searcher<Position> searcherAStar= new ASTARalgorithm<Position>(new ManhattanDistance());
+			Solution<Position> s1 = new Solution<Position>();
+			s1= searcherAStar.search(manhattanAstarMaze);
+			solutionToSend =s1;
+			break;
+
+		case "euclidianastar":
+			System.out.println("Attention: using euclidian_astar");
+			searchMaze3DAdapter euclidianAstarMaze= new searchMaze3DAdapter(current);	
+			Searcher<Position> searcherAStar1= new ASTARalgorithm<Position>(new EuclideanDistance());
+			Solution<Position> s2 = new Solution<Position>();
+			s2= searcherAStar1.search(euclidianAstarMaze);
+			solutionToSend =s2;
+			break;
+		default:
+			System.out.println("Wrong Input");
+			break;
+		}
+		return solutionToSend;
+	}
+
+});
+executor.execute(new Runnable() {
+
+	@Override
+	public void run() {
+		Solution<Position> sol = null;
+		try {
+			sol = future.get();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if(sol!=null){
+			try {
+				mazeToSolution.put(current,future.get());
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ExecutionException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				saveSolution();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			constantArgs[0] = Enums.MODEL_SOLVED;
+			setChanged();
+			notifyObservers(constantArgs);
+		}
+		else{
+			constantArgs[0] = Enums.MODEL_ERROR;
+			setChanged();
+			notifyObservers(constantArgs);
+		}
+		
+	}
+	
+});
+try {
+	return future.get();
+} catch (InterruptedException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+} catch (ExecutionException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+}
+return solutionToSend;*/
