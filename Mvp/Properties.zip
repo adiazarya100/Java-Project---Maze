@@ -5,14 +5,14 @@
    <string>poolSize</string>
    <void method="set">
     <object idref="Properties0"/>
-    <int>7</int>
+    <int>6</int>
    </void>
   </void>
   <void class="presenter.Properties" method="getField">
    <string>serverIP</string>
    <void method="set">
     <object idref="Properties0"/>
-    <string>127.0.0.1</string>
+    <string>10.0.0.2</string>
    </void>
   </void>
   <void class="presenter.Properties" method="getField">
