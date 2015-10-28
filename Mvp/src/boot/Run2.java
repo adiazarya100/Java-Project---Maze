@@ -24,6 +24,14 @@ import presenter.Properties;
 import view.MyView;
 import view.View;
 
+/** * @authors  Zlil Korman 302751839 & adi azarya 200540789
+* @version 1.0
+* @since   2015-10-27*/ 
+
+/**
+ * The Class Run.
+ * this class run GUI or CLI depends on the user decision without **/
+
 public class Run2 {
 
 	public static void main(String[] args) {
