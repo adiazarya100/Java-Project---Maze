@@ -14,7 +14,7 @@ import java.util.Observer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.google.common.util.concurrent.ListeningExecutorService;
+//import com.google.common.util.concurrent.ListeningExecutorService;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
@@ -31,7 +31,7 @@ public class MazeClientHandler extends Observable implements ClientHandler,Obser
 	protected HashMap<Maze3d, Solution<Position>> mazeToSolution; 
 	
 	/** The executor. */
-	private ListeningExecutorService executor; //Manage the thread pool.
+	//private ListeningExecutorService executor; //Manage the thread pool.
 
 	/** The active clients. */
 	volatile ConcurrentHashMap<String,Socket> activeClients=new ConcurrentHashMap<String,Socket>();
