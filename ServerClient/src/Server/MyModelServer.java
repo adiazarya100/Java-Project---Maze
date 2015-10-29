@@ -102,6 +102,17 @@ public class MyModelServer extends Observable implements Model,Runnable{
 	 *  if not, the mthod will solve the given maze using the given algorithm*/
 	public Solution<Position> ModelSolveing(Maze3d maze, String algorithm) {
 
+		int[][][] tmpMaze = maze.getMaze3d();
+		for (int x = 0; x < tmpMaze.length; x++) {
+			for (int y = 0; y < tmpMaze[0].length; y++) {
+				for (int z = 0; z < tmpMaze[0][0].length; z++) {
+					if (tmpMaze[x][y][z] == 2)
+						tmpMaze[x][y][z] = 0;
+				}
+			}
+		}
+		
+		
 		System.out.println("enter solve");
 		try {
 			File f = new File("./Solutions.zip");
